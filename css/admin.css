@@ -356,7 +356,7 @@ body.demo-bar-hidden .admin-topbar {
 /* Split Review Workflow (Pelayanan Surat) */
 .split-drawer-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: 20px;
 }
 
@@ -411,7 +411,7 @@ body.demo-bar-hidden .admin-topbar {
   width: 100%;
   max-width: 960px;
   display: grid;
-  grid-template-columns: 1fr 1.05fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: 24px;
   align-items: stretch;
 }
@@ -515,7 +515,7 @@ body.demo-bar-hidden .admin-topbar {
 
 .ds-admin-preview {
   display: grid;
-  grid-template-columns: 230px 1fr;
+  grid-template-columns: 230px minmax(0, 1fr);
   gap: 16px;
   background: var(--bg-canvas);
   padding: 16px;

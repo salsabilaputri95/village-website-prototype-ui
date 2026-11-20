@@ -290,6 +290,7 @@
   border: 1px solid var(--line-subtle);
   box-shadow: var(--shadow-md);
   padding: 22px;
+  min-width: 0;
   transition: transform var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard);
 }
 
@@ -317,6 +318,7 @@
   border: 1px solid var(--line-subtle);
   box-shadow: var(--shadow-md);
   padding: 20px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;

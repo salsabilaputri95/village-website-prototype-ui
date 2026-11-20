@@ -256,19 +256,6 @@ body.demo-bar-hidden .pub-header {
   font-weight: 600;
 }
 
-.news-horiz-card {
-  padding: 14px;
-  cursor: pointer;
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.news-horiz-thumb {
-  width: 170px;
-  flex-shrink: 0;
-}
-
 /* Home Hero */
 .hero-wrap {
   padding: 28px 0 18px;
@@ -281,7 +268,7 @@ body.demo-bar-hidden .pub-header {
   padding: 40px 44px;
   box-shadow: var(--shadow-lg);
   display: grid;
-  grid-template-columns: 1.25fr 0.95fr;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.95fr);
   gap: 36px;
   align-items: center;
   position: relative;
@@ -324,6 +311,7 @@ body.demo-bar-hidden .pub-header {
 
 .hero-search input {
   flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
   color: var(--text-primary);
@@ -422,6 +410,25 @@ body.demo-bar-hidden .pub-header {
   background: var(--navy-soft);
 }
 
+.news-horiz-card {
+  padding: 14px;
+  cursor: pointer;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.news-horiz-card > .flex-1 {
+  min-width: 0;
+}
+
+.news-thumb.news-horiz-thumb {
+  width: 170px;
+  flex: 0 0 170px;
+}
+
 .ann-pinned {
   background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
   border: 1px solid #F59E0B;
@@ -432,7 +439,7 @@ body.demo-bar-hidden .pub-header {
 /* Sambutan Kades */
 .sambutan-card {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 220px minmax(0, 1fr);
   gap: 28px;
   align-items: center;
 }
@@ -478,7 +485,7 @@ body.demo-bar-hidden .pub-header {
 /* Interactive Desktop Map 2-Pane */
 .map-layout {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 320px minmax(0, 1fr);
   gap: 20px;
   align-items: stretch;
 }
@@ -562,7 +569,7 @@ body.demo-bar-hidden .pub-header {
 
 .pub-footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1.1fr;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr);
   gap: 28px;
 }
 
@@ -605,18 +612,26 @@ body.demo-bar-hidden .pub-header {
    ========================================================================== */
 
 @media (max-width: 1279px) {
-  .pub-header-inner { padding: 0 18px; gap: 12px; }
-  .pub-nav-link { padding: 7px 8px; font-size: 13px; }
+  .pub-header-inner { padding: 0 16px; gap: 10px; }
+  .pub-logo-sq { width: 34px; height: 34px; border-radius: 10px; }
+  .pub-brand { gap: 8px; min-width: 0; }
+  .pub-brand-name, .pub-brand-sub { max-width: 148px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pub-nav { gap: 0; }
+  .pub-nav-link { padding: 6px 7px; font-size: 12.5px; }
+  .pub-cta-desktop { padding: 8px 12px; font-size: 12.5px; }
   .hero-card { padding: 32px; gap: 26px; }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1099px) {
   .pub-nav { display: none; }
   .pub-mobile-toggle { display: inline-flex; }
+}
+
+@media (max-width: 1023px) {
   .hero-card { grid-template-columns: 1fr; padding: 26px 22px; gap: 22px; }
   .map-layout { grid-template-columns: 1fr; }
   .pub-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
-  .sambutan-card { grid-template-columns: 170px 1fr; gap: 20px; }
+  .sambutan-card { grid-template-columns: 170px minmax(0, 1fr); gap: 20px; }
 }
 
 @media (max-width: 639px) {
@@ -631,7 +646,7 @@ body.demo-bar-hidden .pub-header {
   .section-head { flex-wrap: wrap; align-items: flex-start; gap: 10px; }
   .page-banner { padding: 18px 0 16px; margin-bottom: 16px; }
   .news-horiz-card { flex-direction: column; align-items: stretch; }
-  .news-horiz-thumb { width: 100%; }
+  .news-thumb.news-horiz-thumb { width: 100%; flex: 0 0 auto; }
   .sambutan-card { grid-template-columns: 1fr; gap: 16px; }
   .kades-portrait { max-width: 150px; }
   .org-row { grid-template-columns: 1fr; }
