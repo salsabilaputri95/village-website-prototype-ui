@@ -145,17 +145,17 @@
         '<div>' +
           '<div class="t-caption t-muted mb-8">NAVBAR WEBSITE PUBLIK &amp; FOOTER NAVY</div>' +
           '<div style="border:1px solid var(--border-subtle);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)">' +
-            '<div style="background:#FFFFFF;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border-subtle)">' +
+            '<div class="ds-nav-preview">' +
               '<div class="flex items-center gap-10">' +
                 '<div class="pub-logo-sq" style="width:34px;height:34px">' + icon('building', 'icon-sm') + '</div>' +
                 '<div><div style="font-size:13px;font-weight:700">Desa [Nama Desa]</div><div style="font-size:11px;color:var(--text-muted)">Kabupaten [Nama Kabupaten]</div></div>' +
               '</div>' +
-              '<div class="flex items-center gap-12 t-caption" style="color:var(--text-secondary)">' +
+              '<div class="ds-nav-links t-caption">' +
                 '<span style="color:var(--brand-accent);font-weight:700">Home</span><span>Profil Desa</span><span>Data Desa</span><span>Layanan Desa</span><span>Informasi</span><span>Info Bantuan</span><span>Gallery</span><span>Kontak</span>' +
               '</div>' +
               '<button type="button" class="btn btn-sm btn-accent" data-nav="public:ajukan-surat">Ajukan Surat</button>' +
             '</div>' +
-            '<div style="background:var(--brand-primary);color:#CBD5E1;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">' +
+            '<div class="ds-footer-preview">' +
               '<span class="t-caption" style="color:#FFFFFF;font-weight:600">Footer Resmi Desa (#1B3A5C) • Tautan Penting, Kontak &amp; Media Sosial</span>' +
               '<span class="t-caption">Domain .desa.id atas nama Pemerintah Desa</span>' +
             '</div>' +
@@ -164,7 +164,7 @@
 
         '<div>' +
           '<div class="t-caption t-muted mb-8">PORTAL ADMIN DESA (SIDEBAR KIRI + TOPBAR + PENCARIAN CTRL+K)</div>' +
-          '<div style="display:grid;grid-template-columns:230px 1fr;gap:16px;background:var(--bg-canvas);padding:16px;border-radius:18px;border:1px solid var(--border-subtle)">' +
+          '<div class="ds-admin-preview">' +
             '<div style="background:#FFFFFF;border-radius:16px;padding:14px;border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:4px">' +
               '<div class="flex items-center gap-8 mb-8" style="padding-bottom:10px;border-bottom:1px solid var(--border-subtle)">' +
                 '<div class="admin-logo-sq" style="width:30px;height:30px;border-radius:9px">' + icon('building', 'icon-sm') + '</div>' +
@@ -175,10 +175,10 @@
                 return '<div class="admin-nav-btn" style="padding:6px 10px;font-size:12px">' + esc(lbl) + '</div>';
               }).join('') +
             '</div>' +
-            '<div style="background:#FFFFFF;border-radius:16px;padding:14px 18px;border:1px solid var(--border-subtle);height:56px;display:flex;align-items:center;justify-content:space-between">' +
+            '<div style="background:#FFFFFF;border-radius:16px;padding:12px 16px;border:1px solid var(--border-subtle);min-height:56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">' +
               '<strong class="t-sm">Dashboard Ringkasan</strong>' +
-              '<div class="flex items-center gap-8">' +
-                '<span class="cmdk-trigger" style="min-width:160px;height:30px;font-size:11.5px">Cari cepat... <span class="kbd-pill">Ctrl+K</span></span>' +
+              '<div class="flex items-center gap-8 flex-wrap">' +
+                '<span class="cmdk-trigger" style="min-width:140px;height:30px;font-size:11.5px">Cari cepat... <span class="kbd-pill">Ctrl+K</span></span>' +
                 '<span class="icon-circle-btn" style="width:30px;height:30px">' + icon('bell', 'icon-sm') + '</span>' +
                 '<span class="badge badge-navy">[Kepala Desa / Petugas]</span>' +
               '</div>' +

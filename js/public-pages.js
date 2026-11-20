@@ -65,10 +65,57 @@
 
         '<div class="pub-nav-actions">' +
           '<button type="button" class="pub-search-icon-btn" title="Cari informasi desa" data-action="open-public-search">' + icon('search') + '</button>' +
-          '<button type="button" class="btn btn-accent" data-nav="public:ajukan-surat">Ajukan Surat</button>' +
+          '<button type="button" class="btn btn-accent pub-cta-desktop" data-nav="public:ajukan-surat">Ajukan Surat</button>' +
+          '<button type="button" class="pub-mobile-toggle" data-action="toggle-pub-menu" aria-label="Buka menu navigasi" aria-expanded="' + (st.pubMobileMenuOpen ? 'true' : 'false') + '">' + icon(st.pubMobileMenuOpen ? 'x' : 'menu') + '</button>' +
         '</div>' +
       '</div>' +
-    '</header>';
+    '</header>' +
+    (st.pubMobileMenuOpen ? (
+      '<div class="mobile-nav-backdrop" data-action="close-mobile-menus"></div>' +
+      '<aside class="mobile-nav-drawer" role="dialog" aria-label="Menu Navigasi Seluler">' +
+        '<div class="mobile-nav-head">' +
+          '<div class="flex items-center gap-10">' +
+            '<div class="pub-logo-sq" style="width:34px;height:34px">' + icon('building', 'icon-sm') + '</div>' +
+            '<div><div style="font-size:14px;font-weight:700">' + esc(st.data.site.villageName) + '</div><div class="t-caption t-muted">' + esc(st.data.site.regencyName) + '</div></div>' +
+          '</div>' +
+          '<button type="button" class="icon-circle-btn" data-action="close-mobile-menus" aria-label="Tutup menu">' + icon('x', 'icon-sm') + '</button>' +
+        '</div>' +
+        '<div class="mobile-nav-body">' +
+          '<div class="flex-col gap-8 mb-16">' +
+            '<button type="button" class="btn btn-accent w-full" data-nav="public:ajukan-surat">' + icon('file', 'icon-sm') + ' Ajukan Surat Online</button>' +
+            '<button type="button" class="btn btn-outline w-full" data-nav="public:cek-status">' + icon('search', 'icon-sm') + ' Cek Status Pengajuan</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Utama &amp; Profil</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['home']) + '" data-nav="public:home">Home</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['profil']) + '" data-nav="public:profil">Profil Desa</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Data Desa</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['statistik']) + '" data-nav="public:statistik">Statistik Kependudukan</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['potensi']) + '" data-nav="public:potensi">Potensi Desa</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['peta']) + '" data-nav="public:peta">Peta Administrasi</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Layanan Desa</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['layanan']) + '" data-nav="public:layanan">Informasi Layanan (Tanpa Login)</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['ajukan-surat']) + '" data-nav="public:ajukan-surat">Pengajuan Surat Online</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['cek-status']) + '" data-nav="public:cek-status">Cek Status Pengajuan</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Informasi &amp; Media</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['berita']) + '" data-nav="public:berita">Berita Desa</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['pengumuman']) + '" data-nav="public:pengumuman">Pengumuman Resmi</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['bantuan']) + '" data-nav="public:bantuan">Info Bantuan</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['gallery']) + '" data-nav="public:gallery">Gallery</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['kontak']) + '" data-nav="public:kontak">Kontak Kantor Desa</button>' +
+          '</div>' +
+          '<div class="mt-16" style="padding-top:12px;border-top:1px solid var(--border-subtle)">' +
+            '<button type="button" class="btn btn-primary w-full" data-nav="login">' + icon('lock', 'icon-sm') + ' Portal Perangkat Desa</button>' +
+          '</div>' +
+        '</div>' +
+      '</aside>'
+    ) : '');
   }
 
   function renderPublicFooter() {
@@ -205,7 +252,7 @@
 
     '<!-- Berita & Pengumuman Terbaru -->' +
     '<section class="pub-section"><div class="container">' +
-      '<div class="grid" style="grid-template-columns:1.35fr 0.95fr;gap:24px;align-items:start">' +
+      '<div class="grid-asym-main">' +
         '<div>' +
           '<div class="section-head">' +
             '<div><div class="section-eyebrow">Kabar Terkini</div><h2 class="t-h2">Berita Desa Terbaru</h2></div>' +
@@ -213,10 +260,10 @@
           '</div>' +
           '<div class="flex-col gap-16">' +
             pubNews.map(function (n) {
-              return '<article class="card card-interactive flex gap-16 items-center" style="padding:14px;cursor:pointer" data-action="open-news-detail" data-id="' + esc(n.id) + '">' +
-                '<div style="width:170px;flex-shrink:0" class="news-thumb">' + ill.cardScene(n.scene, n.title) + '</div>' +
+              return '<article class="card card-interactive news-horiz-card" data-action="open-news-detail" data-id="' + esc(n.id) + '">' +
+                '<div class="news-thumb news-horiz-thumb">' + ill.cardScene(n.scene, n.title) + '</div>' +
                 '<div class="flex-1">' +
-                  '<div class="flex items-center gap-8 mb-8"><span class="badge badge-navy">' + esc(n.category) + '</span><span class="t-caption t-muted">' + esc(n.date) + '</span></div>' +
+                  '<div class="flex items-center gap-8 mb-8 flex-wrap"><span class="badge badge-navy">' + esc(n.category) + '</span><span class="t-caption t-muted">' + esc(n.date) + '</span></div>' +
                   '<h3 class="t-h3" style="font-size:16px">' + esc(n.title) + '</h3>' +
                   '<p class="t-sm t-muted mt-4">' + esc(n.summary) + '</p>' +
                 '</div>' +
@@ -323,13 +370,13 @@
       body = '<div class="grid-2">' +
         '<div class="card flex-col gap-12">' +
           '<h2 class="t-h2">Identitas Resmi Desa (Placeholder)</h2>' +
-          '<table class="table"><tbody>' +
+          '<div class="table-wrap"><table class="table"><tbody>' +
             '<tr><td class="t-muted" style="width:160px">Nama Desa</td><td><strong>' + esc(s.villageName) + '</strong></td></tr>' +
             '<tr><td class="t-muted">Kecamatan</td><td>' + esc(s.districtName) + '</td></tr>' +
             '<tr><td class="t-muted">Kabupaten</td><td>' + esc(s.regencyName) + '</td></tr>' +
             '<tr><td class="t-muted">Alamat Kantor</td><td>' + esc(s.officeAddress) + '</td></tr>' +
             '<tr><td class="t-muted">Kontak &amp; Jam</td><td>' + esc(s.phone) + ' • ' + esc(s.officeHours) + '</td></tr>' +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>' +
         '<div class="card flex-col gap-12">' +
           '<h2 class="t-h2">Sejarah Singkat Desa</h2>' +
@@ -338,7 +385,7 @@
         '</div>' +
       '</div>';
     } else if (tab === 'visimisi') {
-      body = '<div class="grid" style="grid-template-columns:1fr 1.3fr;gap:20px">' +
+      body = '<div class="grid-visimisi">' +
         '<div class="card" style="background:linear-gradient(145deg,#1B3A5C,#1E7A5F);color:#fff">' +
           '<div class="t-caption" style="color:#A7F3D0;text-transform:uppercase">Visi Pemerintah Desa</div>' +
           '<h2 class="t-h2 mt-12" style="color:#fff;line-height:1.45">“' + esc(pr.visi) + '”</h2>' +
@@ -381,36 +428,36 @@
       body = '<div class="grid-2 mb-20">' +
         '<div class="card">' +
           '<h2 class="t-h2 mb-12">Kondisi Geografis &amp; Batas Wilayah (Contoh)</h2>' +
-          '<table class="table"><tbody>' +
+          '<div class="table-wrap"><table class="table"><tbody>' +
             '<tr><td class="t-muted">Luas Wilayah</td><td><strong>' + esc(g.luas) + '</strong></td></tr>' +
             '<tr><td class="t-muted">Ketinggian</td><td>' + esc(g.ketinggian) + '</td></tr>' +
             '<tr><td class="t-muted">Sebelah Utara</td><td>' + esc(g.batasUtara) + '</td></tr>' +
             '<tr><td class="t-muted">Sebelah Selatan</td><td>' + esc(g.batasSelatan) + '</td></tr>' +
             '<tr><td class="t-muted">Sebelah Barat / Timur</td><td>' + esc(g.batasBarat) + ' / ' + esc(g.batasTimur) + '</td></tr>' +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>' +
         '<div class="card">' +
           '<h2 class="t-h2 mb-12">Pembagian Wilayah (Dusun / RW / RT)</h2>' +
-          '<table class="table"><thead><tr><th>Dusun</th><th>RW</th><th>RT</th><th>KK</th><th>Jiwa (Agregat)</th></tr></thead><tbody>' +
+          '<div class="table-wrap"><table class="table"><thead><tr><th>Dusun</th><th>RW</th><th>RT</th><th>KK</th><th>Jiwa (Agregat)</th></tr></thead><tbody>' +
             g.dusun.map(function (d) {
               return '<tr><td><strong>' + esc(d.nama) + '</strong></td><td>' + d.rw + '</td><td>' + d.rt + '</td><td>' + d.kk + '</td><td>' + d.jiwa.toLocaleString('id-ID') + '</td></tr>';
             }).join('') +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>' +
       '</div>' +
       '<div class="card"><h2 class="t-h2 mb-12">Sarana dan Prasarana Desa</h2>' +
-        '<table class="table"><thead><tr><th>Fasilitas</th><th>Jumlah</th><th>Kondisi</th><th>Lokasi</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Fasilitas</th><th>Jumlah</th><th>Kondisi</th><th>Lokasi</th></tr></thead><tbody>' +
           pr.sarpras.map(function (sp) {
             return '<tr><td><strong>' + esc(sp.nama) + '</strong></td><td>' + esc(sp.jumlah) + '</td><td><span class="badge badge-navy">' + esc(sp.kondisi) + '</span></td><td>' + esc(sp.lokasi) + '</td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     } else {
       body = '<div class="card">' +
         '<h2 class="t-h2 mb-16">Dokumen Profil Desa yang Boleh Dipublikasikan</h2>' +
         '<div class="flex-col gap-12">' +
           pr.dokumen.map(function (doc) {
-            return '<div class="flex items-center justify-between gap-16" style="padding:14px;border:1px solid var(--line-subtle);border-radius:14px">' +
+            return '<div class="flex items-center justify-between flex-wrap gap-16" style="padding:14px;border:1px solid var(--line-subtle);border-radius:14px">' +
               '<div class="flex items-center gap-12"><div class="stat-icon-box">' + icon('file') + '</div><div><div style="font-weight:600">' + esc(doc.judul) + '</div><div class="t-caption t-muted">' + esc(doc.ukuran) + ' • Tahun ' + esc(doc.tahun) + ' • ' + esc(doc.ket) + '</div></div></div>' +
               '<button type="button" class="btn btn-sm btn-outline" data-action="toast" data-msg="Simulasi unduh dokumen publik: ' + esc(doc.judul) + '">' + icon('download', 'icon-sm') + ' Unduh</button>' +
             '</div>';
@@ -510,7 +557,7 @@
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Data Desa</span><span>/</span><span>Potensi Desa</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Katalog Potensi Desa</h1><p class="t-secondary t-sm mt-4">Informasi pertanian, UMKM, kerajinan, wisata, dan budaya desa yang terhubung ke Peta Administrasi.</p></div>' +
-        '<div class="input-with-icon" style="width:300px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari produk, wisata, atau dusun..." value="' + esc(st.potensiSearch) + '" data-action="filter-search" data-key="potensiSearch">' +
         '</div>' +
       '</div>' +
@@ -685,14 +732,14 @@
         ) : (
           '<div class="flex-col gap-16">' +
             '<div class="alert alert-info">' + icon('info') + '<div>Pengajuan yang dikirim tidak otomatis disetujui. Berkas akan diperiksa oleh Petugas Pelayanan dan disetujui Kepala Desa sesuai ketentuan (BR-S04).</div></div>' +
-            '<table class="table"><tbody>' +
+            '<div class="table-wrap"><table class="table"><tbody>' +
               '<tr><td class="t-muted" style="width:180px">Layanan</td><td><strong>' + esc(selectedSvc ? selectedSvc.name : '') + '</strong></td></tr>' +
               '<tr><td class="t-muted">Nama Pemohon</td><td>' + esc(d.applicantName) + '</td></tr>' +
               '<tr><td class="t-muted">Tanggal Lahir</td><td>' + esc(d.dob) + '</td></tr>' +
               '<tr><td class="t-muted">Alamat</td><td>' + esc(d.address) + '</td></tr>' +
               '<tr><td class="t-muted">Keperluan</td><td>' + esc(d.purpose) + '</td></tr>' +
               '<tr><td class="t-muted">Dokumen</td><td>' + esc((d.docs.length ? d.docs : ['KTP_Pemohon.jpg', 'Pengantar_RT.jpg']).join(', ')) + '</td></tr>' +
-            '</tbody></table>' +
+            '</tbody></table></div>' +
             '<div class="flex justify-between">' +
               '<button type="button" class="btn btn-outline" data-action="wiz-next" data-step="2">' + icon('arrowLeft', 'icon-sm') + ' Ubah Isian</button>' +
               '<button type="button" class="btn btn-accent btn-lg" data-action="wiz-submit">' + icon('check', 'icon-sm') + ' Kirim Pengajuan Sekarang</button>' +
@@ -731,7 +778,7 @@
     '</div></section>' +
     '<div class="container" style="padding-bottom:44px">' +
       '<div class="card mb-20">' +
-        '<form class="grid" style="grid-template-columns:1.2fr 1fr auto;gap:14px;align-items:end" data-form="cek-status">' +
+        '<form class="cek-status-form" data-form="cek-status">' +
           '<div class="field"><label class="field-label">Nomor Registrasi Unik</label><input class="input t-mono" name="regNo" placeholder="REG-2026-XXXXX" value="' + esc(st.cekRegInput) + '" required></div>' +
           '<div class="field"><label class="field-label">Tanggal Lahir Pemohon (Verifikasi Kedua)</label><input class="input" type="date" name="dob" value="' + esc(st.cekDobInput) + '" required></div>' +
           '<button type="submit" class="btn btn-primary" style="height:41px">' + icon('search', 'icon-sm') + ' Lacak Status</button>' +
@@ -741,7 +788,7 @@
       '</div>' +
 
       (req ? (
-        '<div class="grid" style="grid-template-columns:1.25fr 0.75fr;gap:20px;align-items:start">' +
+        '<div class="grid-asym-main">' +
           '<div class="card flex-col gap-16">' +
             '<div class="flex items-start justify-between flex-wrap gap-12">' +
               '<div>' +
@@ -828,7 +875,7 @@
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Informasi</span><span>/</span><span>Berita Desa</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Berita &amp; Artikel Kegiatan Desa</h1><p class="t-secondary t-sm mt-4">Publikasi program pembangunan, kegiatan masyarakat, dan perkembangan desa terbaru.</p></div>' +
-        '<div class="input-with-icon" style="width:280px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari berita desa..." value="' + esc(st.beritaSearch) + '" data-action="filter-search" data-key="beritaSearch">' +
         '</div>' +
       '</div>' +
@@ -875,7 +922,7 @@
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Informasi</span><span>/</span><span>Pengumuman</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Pengumuman &amp; Agenda Resmi Desa</h1><p class="t-secondary t-sm mt-4">Pengumuman bertanda <strong>PENTING</strong> tampil teratas; pengumuman kedaluwarsa otomatis berpindah ke arsip tetapi tetap dapat dicari (BR-K02/K03).</p></div>' +
-        '<div class="input-with-icon" style="width:280px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari pengumuman..." value="' + esc(st.pengumumanSearch) + '" data-action="filter-search" data-key="pengumumanSearch">' +
         '</div>' +
       '</div>' +
@@ -887,7 +934,7 @@
     '<div class="container flex-col gap-16" style="padding-bottom:36px">' +
       (items.length ? items.map(function (a) {
         return '<div class="' + (a.important && a.status === 'Dipublikasikan' ? 'ann-pinned' : 'card') + '">' +
-          '<div class="flex items-start justify-between gap-16">' +
+          '<div class="flex items-start justify-between flex-wrap gap-16">' +
             '<div>' +
               '<div class="flex items-center gap-8 mb-8">' +
                 (a.important ? '<span class="badge badge-warning"><span class="badge-dot"></span>PENTING</span>' : '<span class="badge badge-navy">' + esc(a.category) + '</span>') +
@@ -935,12 +982,12 @@
       ) : (
         '<div class="card">' +
           '<h2 class="t-h2 mb-16">Rekapitulasi Agregat Penyaluran (Periode Berjalan 2026)</h2>' +
-          '<table class="table"><thead><tr><th>Program Bantuan</th><th>Instansi Sumber</th><th>Bentuk</th><th>Target KPM</th><th>Tersalurkan</th><th>Capaian</th></tr></thead><tbody>' +
+          '<div class="table-wrap"><table class="table"><thead><tr><th>Program Bantuan</th><th>Instansi Sumber</th><th>Bentuk</th><th>Target KPM</th><th>Tersalurkan</th><th>Capaian</th></tr></thead><tbody>' +
             pubPrograms.map(function (p) {
               var pct = Math.round((p.disalurkan / p.kuota) * 100);
               return '<tr><td><strong>' + esc(p.name) + '</strong></td><td>' + esc(p.source) + '</td><td>' + esc(p.bentuk) + '</td><td>' + p.kuota + ' KPM</td><td><strong>' + p.disalurkan + ' KPM</strong></td><td><span class="badge badge-emerald">' + pct + '%</span></td></tr>';
             }).join('') +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>'
       )) +
     '</div>';
@@ -964,7 +1011,7 @@
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Gallery</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Galeri Foto &amp; Video Kegiatan Desa</h1><p class="t-secondary t-sm mt-4">Dokumentasi pembangunan, budaya, fasilitas, serta tautan video resmi desa.</p></div>' +
-        '<div class="input-with-icon" style="width:280px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari dokumentasi..." value="' + esc(st.gallerySearch) + '" data-action="filter-search" data-key="gallerySearch">' +
         '</div>' +
       '</div>' +

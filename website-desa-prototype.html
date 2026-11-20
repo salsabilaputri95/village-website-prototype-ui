@@ -221,6 +221,37 @@ ul, ol {
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.grid-asym-main { display: grid; grid-template-columns: 1.35fr 0.95fr; gap: 24px; align-items: start; }
+.grid-visimisi { display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; }
+.cek-status-form { display: grid; grid-template-columns: 1.2fr 1fr auto; gap: 14px; align-items: end; }
+.search-box-responsive { width: 290px; max-width: 100%; }
+.filter-control { width: 220px; max-width: 100%; }
+
+@media (max-width: 1023px) {
+  .container { padding-inline: 18px; }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .grid-asym-main,
+  .grid-visimisi { grid-template-columns: 1fr; gap: 18px; }
+  .cek-status-form { grid-template-columns: 1fr 1fr; }
+  .cek-status-form > button { grid-column: 1 / -1; width: 100%; }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --fs-display: 26px;
+    --fs-h1: 22px;
+    --fs-h2: 19px;
+    --fs-h3: 16.5px;
+  }
+  .container { padding-inline: 14px; }
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .cek-status-form { grid-template-columns: 1fr; gap: 14px; }
+  .search-box-responsive,
+  .filter-control { width: 100% !important; }
+}
 
 .mt-4 { margin-top: 4px; }
 .mt-8 { margin-top: 8px; }
@@ -1241,6 +1272,65 @@ ul, ol {
   to { opacity: 1; transform: translateX(0); }
 }
 
+/* ==========================================================================
+   RESPONSIVE COMPONENTS — Laptop, Tablet & Mobile (360px+)
+   ========================================================================== */
+
+@media (max-width: 1240px) {
+  .demo-bar-title { display: none; }
+}
+
+@media (max-width: 1023px) {
+  .demo-bar { padding: 0 12px; gap: 10px; }
+  .demo-bar-left { display: none; }
+  .demo-bar-tabs {
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .demo-bar-tabs::-webkit-scrollbar { display: none; }
+}
+
+@media (max-width: 639px) {
+  .demo-bar-btn { padding: 5px 8px; }
+  .demo-fab {
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    right: 14px;
+    padding: 9px 14px;
+  }
+  .card { padding: 16px; border-radius: 18px; }
+  .stat-card { padding: 16px; border-radius: 18px; }
+  .stat-value { font-size: 25px; }
+  .card-header { flex-wrap: wrap; }
+  .input, .select, .textarea { font-size: 16px; min-height: 44px; }
+  .btn:not(.btn-sm) { min-height: 42px; }
+  .seg-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .seg-tabs::-webkit-scrollbar { display: none; }
+  .seg-tab { flex-shrink: 0; }
+  .stepper { flex-direction: column; align-items: stretch; gap: 10px; }
+  .step-line { display: none; }
+  .modal-backdrop { padding: 10px; }
+  .modal-panel { border-radius: 20px; max-height: calc(100dvh - 20px); }
+  .modal-head, .modal-body, .modal-foot { padding: 14px 16px; }
+  .modal-foot { flex-wrap: wrap; }
+  .drawer-panel { width: 100vw; height: 100dvh; border-left: none; }
+  .cmdk-panel { margin-top: 16px; border-radius: 18px; }
+  .letter-paper { padding: 18px 16px; }
+  .letter-kop { flex-direction: column; gap: 8px; }
+  .toast-stack { bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .toast { min-width: 0; width: calc(100vw - 24px); max-width: 440px; }
+  .pagination { flex-direction: column; align-items: flex-start; }
+  .empty-state { padding: 28px 16px; }
+}
+
 </style>
   <style>
 /* === css/public.css === */
@@ -1416,6 +1506,103 @@ body.demo-bar-hidden .pub-header {
 .pub-search-icon-btn:hover {
   border-color: var(--brand-accent);
   color: var(--brand-accent);
+}
+
+.pub-mobile-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-alt);
+  color: var(--text-primary);
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Slide-Out Navigation Drawer */
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 170;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(3px);
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(330px, 88vw);
+  z-index: 180;
+  background: #FFFFFF;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  animation: slideLeft var(--dur-base) var(--ease-standard);
+}
+
+.mobile-nav-head {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mobile-nav-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
+}
+
+.mobile-nav-group {
+  margin-bottom: 14px;
+}
+
+.mobile-nav-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 4px 10px;
+}
+
+.mobile-nav-link {
+  width: 100%;
+  min-height: 42px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 9px 12px;
+  border-radius: 11px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+.mobile-nav-link.is-active {
+  background: var(--accent-soft);
+  color: var(--brand-accent);
+  font-weight: 600;
+}
+
+.news-horiz-card {
+  padding: 14px;
+  cursor: pointer;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.news-horiz-thumb {
+  width: 170px;
+  flex-shrink: 0;
 }
 
 /* Home Hero */
@@ -1743,9 +1930,64 @@ body.demo-bar-hidden .pub-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
   font-size: 12.5px;
   color: #94A3B8;
+}
+
+/* ==========================================================================
+   RESPONSIVE PUBLIC LAYOUTS — Laptop, Tablet & Mobile (360px+)
+   ========================================================================== */
+
+@media (max-width: 1279px) {
+  .pub-header-inner { padding: 0 18px; gap: 12px; }
+  .pub-nav-link { padding: 7px 8px; font-size: 13px; }
+  .hero-card { padding: 32px; gap: 26px; }
+}
+
+@media (max-width: 1023px) {
+  .pub-nav { display: none; }
+  .pub-mobile-toggle { display: inline-flex; }
+  .hero-card { grid-template-columns: 1fr; padding: 26px 22px; gap: 22px; }
+  .map-layout { grid-template-columns: 1fr; }
+  .pub-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .sambutan-card { grid-template-columns: 170px 1fr; gap: 20px; }
+}
+
+@media (max-width: 639px) {
+  .pub-header-inner { height: 60px; padding: 0 14px; }
+  .pub-brand { min-width: 0; }
+  .pub-brand-name { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; }
+  .pub-brand-sub { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; }
+  .hero-wrap { padding: 16px 0 10px; }
+  .hero-card { border-radius: 20px; padding: 20px 16px; }
+  .hero-search { flex-wrap: nowrap; }
+  .pub-section { padding: 18px 0; }
+  .section-head { flex-wrap: wrap; align-items: flex-start; gap: 10px; }
+  .page-banner { padding: 18px 0 16px; margin-bottom: 16px; }
+  .news-horiz-card { flex-direction: column; align-items: stretch; }
+  .news-horiz-thumb { width: 100%; }
+  .sambutan-card { grid-template-columns: 1fr; gap: 16px; }
+  .kades-portrait { max-width: 150px; }
+  .org-row { grid-template-columns: 1fr; }
+  .org-node { min-width: 0; width: 100%; }
+  .map-canvas-card { min-height: 0; }
+  #village-map-svg { min-height: 300px !important; }
+  .map-floating-detail {
+    position: static;
+    max-width: none;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    box-shadow: none;
+  }
+  .pub-footer { margin-top: 28px; padding: 30px 0 calc(20px + env(safe-area-inset-bottom)); }
+  .pub-footer-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+
+@media (max-width: 480px) {
+  .pub-cta-desktop { display: none; }
 }
 
 </style>
@@ -1863,6 +2105,19 @@ body.demo-bar-hidden .admin-sidebar {
   align-items: center;
   gap: 12px;
   border-bottom: 1px solid var(--line-subtle);
+}
+
+.admin-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 155;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(2px);
+}
+
+.admin-menu-toggle,
+.admin-sidebar-close {
+  display: none;
 }
 
 .admin-logo-sq {
@@ -2222,13 +2477,101 @@ body.demo-bar-hidden .admin-topbar {
   padding: 8px;
 }
 
-@media (max-width: 1120px) {
+/* Design System Section 5 Previews */
+.ds-nav-preview {
+  background: #FFFFFF;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ds-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+}
+
+.ds-footer-preview {
+  background: var(--brand-primary);
+  color: #CBD5E1;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ds-admin-preview {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 16px;
+  background: var(--bg-canvas);
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 1279px) {
+  :root { --sidebar-w: 236px; }
+  .admin-topbar { padding: 0 18px; }
+  .admin-content { padding: 20px 18px 36px; }
+  .cmdk-trigger { min-width: 170px; }
+}
+
+@media (max-width: 1023px) {
+  .admin-menu-toggle,
+  .admin-sidebar-close { display: inline-flex; }
+  .admin-stage-badge { display: none; }
+  .admin-sidebar {
+    position: fixed;
+    top: 0 !important;
+    left: 0;
+    bottom: 0;
+    height: 100dvh !important;
+    width: min(290px, 85vw);
+    z-index: 160;
+    transform: translateX(-100%);
+    transition: transform var(--dur-base) var(--ease-standard);
+    box-shadow: var(--shadow-lg);
+  }
+  .admin-sidebar.is-open { transform: translateX(0); }
   .swatch-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .hero-card { grid-template-columns: 1fr; }
-  .map-layout { grid-template-columns: 1fr; }
   .login-grid { grid-template-columns: 1fr; }
   .split-drawer-grid { grid-template-columns: 1fr; }
-  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 639px) {
+  .admin-topbar { height: 58px; padding: 0 12px; gap: 8px; }
+  .admin-topbar-right { gap: 6px; }
+  .admin-content { padding: 16px 14px calc(28px + env(safe-area-inset-bottom)); }
+  .cmdk-trigger { min-width: 38px; width: 38px; height: 38px; padding: 0; justify-content: center; border-radius: 12px; }
+  .cmdk-trigger .cmdk-label,
+  .cmdk-trigger .kbd-pill { display: none; }
+  .role-pill-select { padding: 0 8px 0 6px; max-width: 138px; }
+  .role-pill-select select { max-width: 90px; font-size: 12px; text-overflow: ellipsis; }
+  .notif-popover {
+    position: fixed;
+    top: calc(var(--demo-bar-h) + 64px);
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+  body.demo-bar-hidden .notif-popover { top: 64px; }
+  .ds-hero-banner { padding: 20px 18px; }
+  .ds-admin-preview { grid-template-columns: 1fr; }
+  .login-shell { padding: 16px 14px; }
+  .login-brand-panel { padding: 24px 20px; }
+}
+
+@media (max-width: 520px) {
+  .swatch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 </style>
@@ -2297,7 +2640,8 @@ body.demo-bar-hidden .admin-topbar {
     copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
     layout: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
     school: '<path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><path d="M14 22v-4a2 2 0 0 0-4 0v4"/><path d="M18 5v17"/><path d="M6 5v17"/>',
-    heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>'
+    heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+    menu: '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>'
   };
 
   w.DesaApp.icon = function (name, cls) {
@@ -2972,6 +3316,8 @@ body.demo-bar-hidden .admin-topbar {
     adminTheme: 'light', // 'light' | 'dark'
     currentRole: 'petugas_pelayanan',
     demoBarCollapsed: false,
+    pubMobileMenuOpen: false,
+    adminSidebarOpen: false,
     showFullNik: false,
 
     // Sub-tabs & view filters
@@ -3822,17 +4168,17 @@ body.demo-bar-hidden .admin-topbar {
         '<div>' +
           '<div class="t-caption t-muted mb-8">NAVBAR WEBSITE PUBLIK &amp; FOOTER NAVY</div>' +
           '<div style="border:1px solid var(--border-subtle);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)">' +
-            '<div style="background:#FFFFFF;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border-subtle)">' +
+            '<div class="ds-nav-preview">' +
               '<div class="flex items-center gap-10">' +
                 '<div class="pub-logo-sq" style="width:34px;height:34px">' + icon('building', 'icon-sm') + '</div>' +
                 '<div><div style="font-size:13px;font-weight:700">Desa [Nama Desa]</div><div style="font-size:11px;color:var(--text-muted)">Kabupaten [Nama Kabupaten]</div></div>' +
               '</div>' +
-              '<div class="flex items-center gap-12 t-caption" style="color:var(--text-secondary)">' +
+              '<div class="ds-nav-links t-caption">' +
                 '<span style="color:var(--brand-accent);font-weight:700">Home</span><span>Profil Desa</span><span>Data Desa</span><span>Layanan Desa</span><span>Informasi</span><span>Info Bantuan</span><span>Gallery</span><span>Kontak</span>' +
               '</div>' +
               '<button type="button" class="btn btn-sm btn-accent" data-nav="public:ajukan-surat">Ajukan Surat</button>' +
             '</div>' +
-            '<div style="background:var(--brand-primary);color:#CBD5E1;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">' +
+            '<div class="ds-footer-preview">' +
               '<span class="t-caption" style="color:#FFFFFF;font-weight:600">Footer Resmi Desa (#1B3A5C) • Tautan Penting, Kontak &amp; Media Sosial</span>' +
               '<span class="t-caption">Domain .desa.id atas nama Pemerintah Desa</span>' +
             '</div>' +
@@ -3841,7 +4187,7 @@ body.demo-bar-hidden .admin-topbar {
 
         '<div>' +
           '<div class="t-caption t-muted mb-8">PORTAL ADMIN DESA (SIDEBAR KIRI + TOPBAR + PENCARIAN CTRL+K)</div>' +
-          '<div style="display:grid;grid-template-columns:230px 1fr;gap:16px;background:var(--bg-canvas);padding:16px;border-radius:18px;border:1px solid var(--border-subtle)">' +
+          '<div class="ds-admin-preview">' +
             '<div style="background:#FFFFFF;border-radius:16px;padding:14px;border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:4px">' +
               '<div class="flex items-center gap-8 mb-8" style="padding-bottom:10px;border-bottom:1px solid var(--border-subtle)">' +
                 '<div class="admin-logo-sq" style="width:30px;height:30px;border-radius:9px">' + icon('building', 'icon-sm') + '</div>' +
@@ -3852,10 +4198,10 @@ body.demo-bar-hidden .admin-topbar {
                 return '<div class="admin-nav-btn" style="padding:6px 10px;font-size:12px">' + esc(lbl) + '</div>';
               }).join('') +
             '</div>' +
-            '<div style="background:#FFFFFF;border-radius:16px;padding:14px 18px;border:1px solid var(--border-subtle);height:56px;display:flex;align-items:center;justify-content:space-between">' +
+            '<div style="background:#FFFFFF;border-radius:16px;padding:12px 16px;border:1px solid var(--border-subtle);min-height:56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">' +
               '<strong class="t-sm">Dashboard Ringkasan</strong>' +
-              '<div class="flex items-center gap-8">' +
-                '<span class="cmdk-trigger" style="min-width:160px;height:30px;font-size:11.5px">Cari cepat... <span class="kbd-pill">Ctrl+K</span></span>' +
+              '<div class="flex items-center gap-8 flex-wrap">' +
+                '<span class="cmdk-trigger" style="min-width:140px;height:30px;font-size:11.5px">Cari cepat... <span class="kbd-pill">Ctrl+K</span></span>' +
                 '<span class="icon-circle-btn" style="width:30px;height:30px">' + icon('bell', 'icon-sm') + '</span>' +
                 '<span class="badge badge-navy">[Kepala Desa / Petugas]</span>' +
               '</div>' +
@@ -3937,10 +4283,57 @@ body.demo-bar-hidden .admin-topbar {
 
         '<div class="pub-nav-actions">' +
           '<button type="button" class="pub-search-icon-btn" title="Cari informasi desa" data-action="open-public-search">' + icon('search') + '</button>' +
-          '<button type="button" class="btn btn-accent" data-nav="public:ajukan-surat">Ajukan Surat</button>' +
+          '<button type="button" class="btn btn-accent pub-cta-desktop" data-nav="public:ajukan-surat">Ajukan Surat</button>' +
+          '<button type="button" class="pub-mobile-toggle" data-action="toggle-pub-menu" aria-label="Buka menu navigasi" aria-expanded="' + (st.pubMobileMenuOpen ? 'true' : 'false') + '">' + icon(st.pubMobileMenuOpen ? 'x' : 'menu') + '</button>' +
         '</div>' +
       '</div>' +
-    '</header>';
+    '</header>' +
+    (st.pubMobileMenuOpen ? (
+      '<div class="mobile-nav-backdrop" data-action="close-mobile-menus"></div>' +
+      '<aside class="mobile-nav-drawer" role="dialog" aria-label="Menu Navigasi Seluler">' +
+        '<div class="mobile-nav-head">' +
+          '<div class="flex items-center gap-10">' +
+            '<div class="pub-logo-sq" style="width:34px;height:34px">' + icon('building', 'icon-sm') + '</div>' +
+            '<div><div style="font-size:14px;font-weight:700">' + esc(st.data.site.villageName) + '</div><div class="t-caption t-muted">' + esc(st.data.site.regencyName) + '</div></div>' +
+          '</div>' +
+          '<button type="button" class="icon-circle-btn" data-action="close-mobile-menus" aria-label="Tutup menu">' + icon('x', 'icon-sm') + '</button>' +
+        '</div>' +
+        '<div class="mobile-nav-body">' +
+          '<div class="flex-col gap-8 mb-16">' +
+            '<button type="button" class="btn btn-accent w-full" data-nav="public:ajukan-surat">' + icon('file', 'icon-sm') + ' Ajukan Surat Online</button>' +
+            '<button type="button" class="btn btn-outline w-full" data-nav="public:cek-status">' + icon('search', 'icon-sm') + ' Cek Status Pengajuan</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Utama &amp; Profil</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['home']) + '" data-nav="public:home">Home</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['profil']) + '" data-nav="public:profil">Profil Desa</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Data Desa</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['statistik']) + '" data-nav="public:statistik">Statistik Kependudukan</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['potensi']) + '" data-nav="public:potensi">Potensi Desa</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['peta']) + '" data-nav="public:peta">Peta Administrasi</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Layanan Desa</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['layanan']) + '" data-nav="public:layanan">Informasi Layanan (Tanpa Login)</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['ajukan-surat']) + '" data-nav="public:ajukan-surat">Pengajuan Surat Online</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['cek-status']) + '" data-nav="public:cek-status">Cek Status Pengajuan</button>' +
+          '</div>' +
+          '<div class="mobile-nav-group">' +
+            '<div class="mobile-nav-title">Informasi &amp; Media</div>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['berita']) + '" data-nav="public:berita">Berita Desa</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['pengumuman']) + '" data-nav="public:pengumuman">Pengumuman Resmi</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['bantuan']) + '" data-nav="public:bantuan">Info Bantuan</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['gallery']) + '" data-nav="public:gallery">Gallery</button>' +
+            '<button type="button" class="mobile-nav-link' + isActive(['kontak']) + '" data-nav="public:kontak">Kontak Kantor Desa</button>' +
+          '</div>' +
+          '<div class="mt-16" style="padding-top:12px;border-top:1px solid var(--border-subtle)">' +
+            '<button type="button" class="btn btn-primary w-full" data-nav="login">' + icon('lock', 'icon-sm') + ' Portal Perangkat Desa</button>' +
+          '</div>' +
+        '</div>' +
+      '</aside>'
+    ) : '');
   }
 
   function renderPublicFooter() {
@@ -4077,7 +4470,7 @@ body.demo-bar-hidden .admin-topbar {
 
     '<!-- Berita & Pengumuman Terbaru -->' +
     '<section class="pub-section"><div class="container">' +
-      '<div class="grid" style="grid-template-columns:1.35fr 0.95fr;gap:24px;align-items:start">' +
+      '<div class="grid-asym-main">' +
         '<div>' +
           '<div class="section-head">' +
             '<div><div class="section-eyebrow">Kabar Terkini</div><h2 class="t-h2">Berita Desa Terbaru</h2></div>' +
@@ -4085,10 +4478,10 @@ body.demo-bar-hidden .admin-topbar {
           '</div>' +
           '<div class="flex-col gap-16">' +
             pubNews.map(function (n) {
-              return '<article class="card card-interactive flex gap-16 items-center" style="padding:14px;cursor:pointer" data-action="open-news-detail" data-id="' + esc(n.id) + '">' +
-                '<div style="width:170px;flex-shrink:0" class="news-thumb">' + ill.cardScene(n.scene, n.title) + '</div>' +
+              return '<article class="card card-interactive news-horiz-card" data-action="open-news-detail" data-id="' + esc(n.id) + '">' +
+                '<div class="news-thumb news-horiz-thumb">' + ill.cardScene(n.scene, n.title) + '</div>' +
                 '<div class="flex-1">' +
-                  '<div class="flex items-center gap-8 mb-8"><span class="badge badge-navy">' + esc(n.category) + '</span><span class="t-caption t-muted">' + esc(n.date) + '</span></div>' +
+                  '<div class="flex items-center gap-8 mb-8 flex-wrap"><span class="badge badge-navy">' + esc(n.category) + '</span><span class="t-caption t-muted">' + esc(n.date) + '</span></div>' +
                   '<h3 class="t-h3" style="font-size:16px">' + esc(n.title) + '</h3>' +
                   '<p class="t-sm t-muted mt-4">' + esc(n.summary) + '</p>' +
                 '</div>' +
@@ -4195,13 +4588,13 @@ body.demo-bar-hidden .admin-topbar {
       body = '<div class="grid-2">' +
         '<div class="card flex-col gap-12">' +
           '<h2 class="t-h2">Identitas Resmi Desa (Placeholder)</h2>' +
-          '<table class="table"><tbody>' +
+          '<div class="table-wrap"><table class="table"><tbody>' +
             '<tr><td class="t-muted" style="width:160px">Nama Desa</td><td><strong>' + esc(s.villageName) + '</strong></td></tr>' +
             '<tr><td class="t-muted">Kecamatan</td><td>' + esc(s.districtName) + '</td></tr>' +
             '<tr><td class="t-muted">Kabupaten</td><td>' + esc(s.regencyName) + '</td></tr>' +
             '<tr><td class="t-muted">Alamat Kantor</td><td>' + esc(s.officeAddress) + '</td></tr>' +
             '<tr><td class="t-muted">Kontak &amp; Jam</td><td>' + esc(s.phone) + ' • ' + esc(s.officeHours) + '</td></tr>' +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>' +
         '<div class="card flex-col gap-12">' +
           '<h2 class="t-h2">Sejarah Singkat Desa</h2>' +
@@ -4210,7 +4603,7 @@ body.demo-bar-hidden .admin-topbar {
         '</div>' +
       '</div>';
     } else if (tab === 'visimisi') {
-      body = '<div class="grid" style="grid-template-columns:1fr 1.3fr;gap:20px">' +
+      body = '<div class="grid-visimisi">' +
         '<div class="card" style="background:linear-gradient(145deg,#1B3A5C,#1E7A5F);color:#fff">' +
           '<div class="t-caption" style="color:#A7F3D0;text-transform:uppercase">Visi Pemerintah Desa</div>' +
           '<h2 class="t-h2 mt-12" style="color:#fff;line-height:1.45">“' + esc(pr.visi) + '”</h2>' +
@@ -4253,36 +4646,36 @@ body.demo-bar-hidden .admin-topbar {
       body = '<div class="grid-2 mb-20">' +
         '<div class="card">' +
           '<h2 class="t-h2 mb-12">Kondisi Geografis &amp; Batas Wilayah (Contoh)</h2>' +
-          '<table class="table"><tbody>' +
+          '<div class="table-wrap"><table class="table"><tbody>' +
             '<tr><td class="t-muted">Luas Wilayah</td><td><strong>' + esc(g.luas) + '</strong></td></tr>' +
             '<tr><td class="t-muted">Ketinggian</td><td>' + esc(g.ketinggian) + '</td></tr>' +
             '<tr><td class="t-muted">Sebelah Utara</td><td>' + esc(g.batasUtara) + '</td></tr>' +
             '<tr><td class="t-muted">Sebelah Selatan</td><td>' + esc(g.batasSelatan) + '</td></tr>' +
             '<tr><td class="t-muted">Sebelah Barat / Timur</td><td>' + esc(g.batasBarat) + ' / ' + esc(g.batasTimur) + '</td></tr>' +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>' +
         '<div class="card">' +
           '<h2 class="t-h2 mb-12">Pembagian Wilayah (Dusun / RW / RT)</h2>' +
-          '<table class="table"><thead><tr><th>Dusun</th><th>RW</th><th>RT</th><th>KK</th><th>Jiwa (Agregat)</th></tr></thead><tbody>' +
+          '<div class="table-wrap"><table class="table"><thead><tr><th>Dusun</th><th>RW</th><th>RT</th><th>KK</th><th>Jiwa (Agregat)</th></tr></thead><tbody>' +
             g.dusun.map(function (d) {
               return '<tr><td><strong>' + esc(d.nama) + '</strong></td><td>' + d.rw + '</td><td>' + d.rt + '</td><td>' + d.kk + '</td><td>' + d.jiwa.toLocaleString('id-ID') + '</td></tr>';
             }).join('') +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>' +
       '</div>' +
       '<div class="card"><h2 class="t-h2 mb-12">Sarana dan Prasarana Desa</h2>' +
-        '<table class="table"><thead><tr><th>Fasilitas</th><th>Jumlah</th><th>Kondisi</th><th>Lokasi</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Fasilitas</th><th>Jumlah</th><th>Kondisi</th><th>Lokasi</th></tr></thead><tbody>' +
           pr.sarpras.map(function (sp) {
             return '<tr><td><strong>' + esc(sp.nama) + '</strong></td><td>' + esc(sp.jumlah) + '</td><td><span class="badge badge-navy">' + esc(sp.kondisi) + '</span></td><td>' + esc(sp.lokasi) + '</td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     } else {
       body = '<div class="card">' +
         '<h2 class="t-h2 mb-16">Dokumen Profil Desa yang Boleh Dipublikasikan</h2>' +
         '<div class="flex-col gap-12">' +
           pr.dokumen.map(function (doc) {
-            return '<div class="flex items-center justify-between gap-16" style="padding:14px;border:1px solid var(--line-subtle);border-radius:14px">' +
+            return '<div class="flex items-center justify-between flex-wrap gap-16" style="padding:14px;border:1px solid var(--line-subtle);border-radius:14px">' +
               '<div class="flex items-center gap-12"><div class="stat-icon-box">' + icon('file') + '</div><div><div style="font-weight:600">' + esc(doc.judul) + '</div><div class="t-caption t-muted">' + esc(doc.ukuran) + ' • Tahun ' + esc(doc.tahun) + ' • ' + esc(doc.ket) + '</div></div></div>' +
               '<button type="button" class="btn btn-sm btn-outline" data-action="toast" data-msg="Simulasi unduh dokumen publik: ' + esc(doc.judul) + '">' + icon('download', 'icon-sm') + ' Unduh</button>' +
             '</div>';
@@ -4382,7 +4775,7 @@ body.demo-bar-hidden .admin-topbar {
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Data Desa</span><span>/</span><span>Potensi Desa</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Katalog Potensi Desa</h1><p class="t-secondary t-sm mt-4">Informasi pertanian, UMKM, kerajinan, wisata, dan budaya desa yang terhubung ke Peta Administrasi.</p></div>' +
-        '<div class="input-with-icon" style="width:300px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari produk, wisata, atau dusun..." value="' + esc(st.potensiSearch) + '" data-action="filter-search" data-key="potensiSearch">' +
         '</div>' +
       '</div>' +
@@ -4557,14 +4950,14 @@ body.demo-bar-hidden .admin-topbar {
         ) : (
           '<div class="flex-col gap-16">' +
             '<div class="alert alert-info">' + icon('info') + '<div>Pengajuan yang dikirim tidak otomatis disetujui. Berkas akan diperiksa oleh Petugas Pelayanan dan disetujui Kepala Desa sesuai ketentuan (BR-S04).</div></div>' +
-            '<table class="table"><tbody>' +
+            '<div class="table-wrap"><table class="table"><tbody>' +
               '<tr><td class="t-muted" style="width:180px">Layanan</td><td><strong>' + esc(selectedSvc ? selectedSvc.name : '') + '</strong></td></tr>' +
               '<tr><td class="t-muted">Nama Pemohon</td><td>' + esc(d.applicantName) + '</td></tr>' +
               '<tr><td class="t-muted">Tanggal Lahir</td><td>' + esc(d.dob) + '</td></tr>' +
               '<tr><td class="t-muted">Alamat</td><td>' + esc(d.address) + '</td></tr>' +
               '<tr><td class="t-muted">Keperluan</td><td>' + esc(d.purpose) + '</td></tr>' +
               '<tr><td class="t-muted">Dokumen</td><td>' + esc((d.docs.length ? d.docs : ['KTP_Pemohon.jpg', 'Pengantar_RT.jpg']).join(', ')) + '</td></tr>' +
-            '</tbody></table>' +
+            '</tbody></table></div>' +
             '<div class="flex justify-between">' +
               '<button type="button" class="btn btn-outline" data-action="wiz-next" data-step="2">' + icon('arrowLeft', 'icon-sm') + ' Ubah Isian</button>' +
               '<button type="button" class="btn btn-accent btn-lg" data-action="wiz-submit">' + icon('check', 'icon-sm') + ' Kirim Pengajuan Sekarang</button>' +
@@ -4603,7 +4996,7 @@ body.demo-bar-hidden .admin-topbar {
     '</div></section>' +
     '<div class="container" style="padding-bottom:44px">' +
       '<div class="card mb-20">' +
-        '<form class="grid" style="grid-template-columns:1.2fr 1fr auto;gap:14px;align-items:end" data-form="cek-status">' +
+        '<form class="cek-status-form" data-form="cek-status">' +
           '<div class="field"><label class="field-label">Nomor Registrasi Unik</label><input class="input t-mono" name="regNo" placeholder="REG-2026-XXXXX" value="' + esc(st.cekRegInput) + '" required></div>' +
           '<div class="field"><label class="field-label">Tanggal Lahir Pemohon (Verifikasi Kedua)</label><input class="input" type="date" name="dob" value="' + esc(st.cekDobInput) + '" required></div>' +
           '<button type="submit" class="btn btn-primary" style="height:41px">' + icon('search', 'icon-sm') + ' Lacak Status</button>' +
@@ -4613,7 +5006,7 @@ body.demo-bar-hidden .admin-topbar {
       '</div>' +
 
       (req ? (
-        '<div class="grid" style="grid-template-columns:1.25fr 0.75fr;gap:20px;align-items:start">' +
+        '<div class="grid-asym-main">' +
           '<div class="card flex-col gap-16">' +
             '<div class="flex items-start justify-between flex-wrap gap-12">' +
               '<div>' +
@@ -4700,7 +5093,7 @@ body.demo-bar-hidden .admin-topbar {
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Informasi</span><span>/</span><span>Berita Desa</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Berita &amp; Artikel Kegiatan Desa</h1><p class="t-secondary t-sm mt-4">Publikasi program pembangunan, kegiatan masyarakat, dan perkembangan desa terbaru.</p></div>' +
-        '<div class="input-with-icon" style="width:280px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari berita desa..." value="' + esc(st.beritaSearch) + '" data-action="filter-search" data-key="beritaSearch">' +
         '</div>' +
       '</div>' +
@@ -4747,7 +5140,7 @@ body.demo-bar-hidden .admin-topbar {
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Informasi</span><span>/</span><span>Pengumuman</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Pengumuman &amp; Agenda Resmi Desa</h1><p class="t-secondary t-sm mt-4">Pengumuman bertanda <strong>PENTING</strong> tampil teratas; pengumuman kedaluwarsa otomatis berpindah ke arsip tetapi tetap dapat dicari (BR-K02/K03).</p></div>' +
-        '<div class="input-with-icon" style="width:280px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari pengumuman..." value="' + esc(st.pengumumanSearch) + '" data-action="filter-search" data-key="pengumumanSearch">' +
         '</div>' +
       '</div>' +
@@ -4759,7 +5152,7 @@ body.demo-bar-hidden .admin-topbar {
     '<div class="container flex-col gap-16" style="padding-bottom:36px">' +
       (items.length ? items.map(function (a) {
         return '<div class="' + (a.important && a.status === 'Dipublikasikan' ? 'ann-pinned' : 'card') + '">' +
-          '<div class="flex items-start justify-between gap-16">' +
+          '<div class="flex items-start justify-between flex-wrap gap-16">' +
             '<div>' +
               '<div class="flex items-center gap-8 mb-8">' +
                 (a.important ? '<span class="badge badge-warning"><span class="badge-dot"></span>PENTING</span>' : '<span class="badge badge-navy">' + esc(a.category) + '</span>') +
@@ -4807,12 +5200,12 @@ body.demo-bar-hidden .admin-topbar {
       ) : (
         '<div class="card">' +
           '<h2 class="t-h2 mb-16">Rekapitulasi Agregat Penyaluran (Periode Berjalan 2026)</h2>' +
-          '<table class="table"><thead><tr><th>Program Bantuan</th><th>Instansi Sumber</th><th>Bentuk</th><th>Target KPM</th><th>Tersalurkan</th><th>Capaian</th></tr></thead><tbody>' +
+          '<div class="table-wrap"><table class="table"><thead><tr><th>Program Bantuan</th><th>Instansi Sumber</th><th>Bentuk</th><th>Target KPM</th><th>Tersalurkan</th><th>Capaian</th></tr></thead><tbody>' +
             pubPrograms.map(function (p) {
               var pct = Math.round((p.disalurkan / p.kuota) * 100);
               return '<tr><td><strong>' + esc(p.name) + '</strong></td><td>' + esc(p.source) + '</td><td>' + esc(p.bentuk) + '</td><td>' + p.kuota + ' KPM</td><td><strong>' + p.disalurkan + ' KPM</strong></td><td><span class="badge badge-emerald">' + pct + '%</span></td></tr>';
             }).join('') +
-          '</tbody></table>' +
+          '</tbody></table></div>' +
         '</div>'
       )) +
     '</div>';
@@ -4836,7 +5229,7 @@ body.demo-bar-hidden .admin-topbar {
       '<div class="breadcrumb"><button type="button" data-nav="public:home">Home</button><span>/</span><span>Gallery</span></div>' +
       '<div class="flex items-center justify-between flex-wrap gap-16">' +
         '<div><h1 class="t-h1">Galeri Foto &amp; Video Kegiatan Desa</h1><p class="t-secondary t-sm mt-4">Dokumentasi pembangunan, budaya, fasilitas, serta tautan video resmi desa.</p></div>' +
-        '<div class="input-with-icon" style="width:280px">' + icon('search', 'icon-sm icon-left') +
+        '<div class="input-with-icon search-box-responsive">' + icon('search', 'icon-sm icon-left') +
           '<input class="input" type="text" placeholder="Cari dokumentasi..." value="' + esc(st.gallerySearch) + '" data-action="filter-search" data-key="gallerySearch">' +
         '</div>' +
       '</div>' +
@@ -5037,7 +5430,7 @@ body.demo-bar-hidden .admin-topbar {
       '</div>' +
 
       '<!-- Antrean Perlu Tindakan & Grafik -->' +
-      '<div class="grid" style="grid-template-columns:1.35fr 0.95fr;gap:20px;align-items:start">' +
+      '<div class="grid-asym-main">' +
         '<div class="card">' +
           '<div class="card-header">' +
             '<div><h2 class="t-h3">Pengajuan yang Membutuhkan Tindakan</h2><div class="t-caption t-muted">Disesuaikan dengan peran ' + esc(role.label) + '</div></div>' +
@@ -5127,52 +5520,52 @@ body.demo-bar-hidden .admin-topbar {
     } else if (tab === 'profil') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Data Perangkat Desa (Tampil di Profil Desa)</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-perangkat">' + icon('plus', 'icon-sm') + ' Tambah Perangkat</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Nama</th><th>Jabatan</th><th>Bidang</th><th>Masa Jabatan</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Nama</th><th>Jabatan</th><th>Bidang</th><th>Masa Jabatan</th></tr></thead><tbody>' +
         st.data.profil.perangkat.map(function (p) {
           return '<tr><td><strong>' + esc(p.nama) + '</strong></td><td><span class="badge badge-emerald">' + esc(p.jabatan) + '</span></td><td>' + esc(p.bidang) + '</td><td>' + esc(p.masa) + '</td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'berita') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Berita (Draft / Terjadwal / Dipublikasikan)</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-news">' + icon('plus', 'icon-sm') + ' Tulis Berita Baru</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Judul Berita</th><th>Kategori</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Judul Berita</th><th>Kategori</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
         st.data.news.map(function (n) {
           return '<tr><td><strong>' + esc(n.title) + '</strong></td><td>' + esc(n.category) + '</td><td>' + esc(n.date) + '</td><td><span class="badge ' + (n.status === 'Dipublikasikan' ? 'badge-emerald' : n.status === 'Terjadwal' ? 'badge-info' : 'badge-neutral') + '">' + esc(n.status) + '</span></td><td>' +
             (!isRO ? '<button type="button" class="btn btn-sm btn-outline" data-action="cycle-news-status" data-id="' + esc(n.id) + '">Ubah Status</button>' : '-') + '</td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'pengumuman') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Pengumuman &amp; Masa Berlaku</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-ann">' + icon('plus', 'icon-sm') + ' Tambah Pengumuman</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Judul</th><th>Penanda</th><th>Berlaku s.d.</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Judul</th><th>Penanda</th><th>Berlaku s.d.</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
         st.data.announcements.map(function (a) {
           return '<tr><td><strong>' + esc(a.title) + '</strong></td><td>' + (a.important ? '<span class="badge badge-warning">PENTING</span>' : '<span class="badge badge-neutral">Normal</span>') + '</td><td>' + esc(a.validUntil) + '</td><td><span class="badge ' + (a.status === 'Dipublikasikan' ? 'badge-emerald' : 'badge-neutral') + '">' + esc(a.status) + '</span></td><td>' +
             (!isRO ? '<button type="button" class="btn btn-sm btn-outline" data-action="toggle-ann-imp" data-id="' + esc(a.id) + '">Toggle Penting</button>' : '-') + '</td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'gallery') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Album Foto &amp; Tautan Video</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-gallery">' + icon('plus', 'icon-sm') + ' Tambah Album/Video</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Judul</th><th>Tipe</th><th>Kategori</th><th>Lokasi</th><th>Status</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Judul</th><th>Tipe</th><th>Kategori</th><th>Lokasi</th><th>Status</th></tr></thead><tbody>' +
         st.data.gallery.map(function (g) {
           return '<tr><td><strong>' + esc(g.title) + '</strong></td><td><span class="badge badge-navy">' + esc(g.type) + '</span></td><td>' + esc(g.category) + '</td><td>' + esc(g.location) + '</td><td><span class="badge badge-emerald">' + esc(g.status) + '</span></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'layanan') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Layanan Desa &amp; Sakelar Pengajuan Online (LYN-04)</h3><span class="t-caption t-muted">Mematikan sakelar langsung menyembunyikan tombol Ajukan Online di Website Publik</span></div>' +
-        '<table class="table"><thead><tr><th>Nama Layanan</th><th>Kategori</th><th>Estimasi</th><th>Unduh PDF Warga</th><th>Opsi Online Aktif</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Nama Layanan</th><th>Kategori</th><th>Estimasi</th><th>Unduh PDF Warga</th><th>Opsi Online Aktif</th></tr></thead><tbody>' +
         st.data.services.map(function (sv) {
           return '<tr><td><strong>' + esc(sv.name) + '</strong></td><td>' + esc(sv.kategori) + '</td><td>' + esc(sv.estimate) + '</td><td>' + (sv.allowCitizenDownload ? 'Diizinkan' : 'Fisik Saja') + '</td>' +
             '<td><label class="switch"><input type="checkbox" ' + (sv.onlineEnabled ? 'checked' : '') + ' ' + (isRO ? 'disabled' : '') + ' data-action="toggle-service-online" data-id="' + esc(sv.id) + '"><span class="switch-track"><span class="switch-thumb"></span></span><span class="t-caption">' + (sv.onlineEnabled ? 'Aktif' : 'Nonaktif') + '</span></label></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Katalog Potensi Desa</h3><button type="button" class="btn btn-sm btn-outline" data-nav="public:potensi">Lihat Katalog Publik</button></div>' +
-        '<table class="table"><thead><tr><th>Nama Potensi</th><th>Kategori</th><th>Lokasi</th><th>Marker Peta</th><th>Status</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Nama Potensi</th><th>Kategori</th><th>Lokasi</th><th>Marker Peta</th><th>Status</th></tr></thead><tbody>' +
         st.data.potentials.map(function (p) {
           return '<tr><td><strong>' + esc(p.name) + '</strong></td><td>' + esc(p.category) + '</td><td>' + esc(p.location) + '</td><td>' + (p.markerId ? '<span class="badge badge-navy">' + esc(p.markerId) + '</span>' : '<span class="t-muted">-</span>') + '</td><td><span class="badge badge-emerald">' + esc(p.status) + '</span></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     }
 
     return '<div class="flex-col gap-16">' +
@@ -5214,9 +5607,9 @@ body.demo-bar-hidden .admin-topbar {
         '<div class="alert alert-info">' + icon('shield') + '<div><strong>Batasan Kewenangan (BR-P01–P08):</strong> Modul ini bukan pengganti sistem resmi Dukcapil dan tidak melakukan sinkronisasi otomatis ke Dukcapil. NIK/KK hanya tampil ter-masking untuk staf yang tidak membutuhkan tampilan penuh.</div></div>' +
         '<div class="card">' +
           '<div class="flex items-center justify-between flex-wrap gap-12 mb-16">' +
-            '<div class="flex items-center gap-10 flex-wrap">' +
-              '<div class="input-with-icon" style="width:240px">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nama atau NIK..." value="' + esc(st.residentSearch) + '" data-action="filter-search" data-key="residentSearch"></div>' +
-              '<select class="select" style="width:190px" data-action="set-select" data-key="residentDusunFilter">' +
+            '<div class="flex items-center gap-10 flex-wrap flex-1">' +
+              '<div class="input-with-icon filter-control">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nama atau NIK..." value="' + esc(st.residentSearch) + '" data-action="filter-search" data-key="residentSearch"></div>' +
+              '<select class="select filter-control" data-action="set-select" data-key="residentDusunFilter">' +
                 ['Semua', 'Dusun Krajan', 'Dusun Sawah Indah', 'Dusun Bukit Makmur', 'Dusun Sumber Jaya'].map(function (d) {
                   return '<option value="' + d + '"' + (st.residentDusunFilter === d ? ' selected' : '') + '>' + d + '</option>';
                 }).join('') +
@@ -5264,11 +5657,11 @@ body.demo-bar-hidden .admin-topbar {
             '<button type="button" class="btn btn-sm btn-outline" data-nav="public:peta">Buka Peta Publik</button>' +
           '</div>' +
         '</div>' +
-        '<table class="table"><thead><tr><th>ID</th><th>Nama Lokasi</th><th>Kategori</th><th>Dusun</th><th>Koordinat (Contoh)</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nama Lokasi</th><th>Kategori</th><th>Dusun</th><th>Koordinat (Contoh)</th></tr></thead><tbody>' +
           st.data.mapMarkers.map(function (m) {
             return '<tr><td class="t-mono t-caption">' + esc(m.id) + '</td><td><strong>' + esc(m.name) + '</strong></td><td><span class="badge badge-navy">' + esc(m.category) + '</span></td><td>' + esc(m.dusun) + '</td><td class="t-mono t-caption">' + esc(m.coords) + '</td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     }
 
@@ -5320,10 +5713,12 @@ body.demo-bar-hidden .admin-topbar {
     }
 
     return '<div class="admin-shell" data-admin-theme="' + esc(st.adminTheme) + '">' +
-      '<aside class="admin-sidebar">' +
+      (st.adminSidebarOpen ? '<div class="admin-sidebar-backdrop" data-action="close-mobile-menus"></div>' : '') +
+      '<aside class="admin-sidebar' + (st.adminSidebarOpen ? ' is-open' : '') + '">' +
         '<div class="admin-sidebar-head">' +
           '<div class="admin-logo-sq">' + icon('building') + '</div>' +
-          '<div><div style="font-weight:700;font-size:14.5px">Portal Admin Desa</div><div class="t-caption t-muted">' + esc(st.data.site.villageName) + '</div></div>' +
+          '<div class="flex-1"><div style="font-weight:700;font-size:14.5px">Portal Admin Desa</div><div class="t-caption t-muted">' + esc(st.data.site.villageName) + '</div></div>' +
+          '<button type="button" class="icon-circle-btn admin-sidebar-close" data-action="close-mobile-menus" aria-label="Tutup menu admin">' + icon('x', 'icon-sm') + '</button>' +
         '</div>' +
 
         '<nav class="admin-nav" aria-label="Navigasi Admin">' +
@@ -5346,13 +5741,14 @@ body.demo-bar-hidden .admin-topbar {
 
       '<div class="admin-main-col">' +
         '<header class="admin-topbar">' +
-          '<div class="flex items-center gap-12">' +
-            '<h1 class="t-h3">' + esc(activeNav.id === 'dashboard' ? 'Dashboard Ringkasan' : activeNav.label) + '</h1>' +
-            '<span class="badge badge-neutral">Tahap 1–5 Terintegrasi</span>' +
+          '<div class="flex items-center gap-12" style="min-width:0">' +
+            '<button type="button" class="icon-circle-btn admin-menu-toggle" data-action="toggle-admin-sidebar" aria-label="Buka menu admin" aria-expanded="' + (st.adminSidebarOpen ? 'true' : 'false') + '">' + icon('menu', 'icon-sm') + '</button>' +
+            '<h1 class="t-h3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(activeNav.id === 'dashboard' ? 'Dashboard Ringkasan' : activeNav.label) + '</h1>' +
+            '<span class="badge badge-neutral admin-stage-badge">Tahap 1–5 Terintegrasi</span>' +
           '</div>' +
           '<div class="admin-topbar-right">' +
-            '<button type="button" class="cmdk-trigger" data-action="open-cmdk">' +
-              '<span class="flex items-center gap-8">' + icon('search', 'icon-sm') + ' Cari cepat...</span>' +
+            '<button type="button" class="cmdk-trigger" data-action="open-cmdk" aria-label="Pencarian cepat">' +
+              '<span class="flex items-center gap-8">' + icon('search', 'icon-sm') + ' <span class="cmdk-label">Cari cepat...</span></span>' +
               '<span class="kbd-pill">Ctrl+K</span>' +
             '</button>' +
 
@@ -5430,9 +5826,9 @@ body.demo-bar-hidden .admin-topbar {
       body = '<div class="flex-col gap-16">' +
         '<div class="card">' +
           '<div class="flex items-center justify-between flex-wrap gap-12 mb-16">' +
-            '<div class="flex items-center gap-10 flex-wrap">' +
-              '<div class="input-with-icon" style="width:260px">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari No. Reg atau nama pemohon..." value="' + esc(st.adminRequestSearch) + '" data-action="filter-search" data-key="adminRequestSearch"></div>' +
-              '<select class="select" style="width:210px" data-action="set-select" data-key="adminRequestFilter">' +
+            '<div class="flex items-center gap-10 flex-wrap flex-1">' +
+              '<div class="input-with-icon filter-control">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari No. Reg atau nama pemohon..." value="' + esc(st.adminRequestSearch) + '" data-action="filter-search" data-key="adminRequestSearch"></div>' +
+              '<select class="select filter-control" data-action="set-select" data-key="adminRequestFilter">' +
                 statuses.map(function (s) { return '<option value="' + esc(s) + '"' + (st.adminRequestFilter === s ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') +
               '</select>' +
             '</div>' +
@@ -5492,9 +5888,9 @@ body.demo-bar-hidden .admin-topbar {
       });
       body = '<div class="card flex-col gap-16">' +
         '<div class="flex items-center justify-between flex-wrap gap-12">' +
-          '<div class="flex items-center gap-10 flex-wrap">' +
-            '<div class="input-with-icon" style="width:240px">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nomor / perihal arsip..." value="' + esc(st.archiveSearch) + '" data-action="filter-search" data-key="archiveSearch"></div>' +
-            '<select class="select" style="width:220px" data-action="set-select" data-key="archiveCategoryFilter">' +
+          '<div class="flex items-center gap-10 flex-wrap flex-1">' +
+            '<div class="input-with-icon filter-control">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nomor / perihal arsip..." value="' + esc(st.archiveSearch) + '" data-action="filter-search" data-key="archiveSearch"></div>' +
+            '<select class="select filter-control" data-action="set-select" data-key="archiveCategoryFilter">' +
               arCats.map(function (c) { return '<option value="' + esc(c) + '"' + (st.archiveCategoryFilter === c ? ' selected' : '') + '>' + esc(c) + '</option>'; }).join('') +
             '</select>' +
           '</div>' +
@@ -5567,20 +5963,20 @@ body.demo-bar-hidden .admin-topbar {
       }).join('') + '</div>';
     } else if (tab === 'periode') {
       body = '<div class="card"><h3 class="t-h3 mb-12">Periode Penyaluran Bantuan</h3>' +
-        '<table class="table"><thead><tr><th>ID</th><th>Label Periode</th><th>Rentang Tanggal</th><th>Status</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Label Periode</th><th>Rentang Tanggal</th><th>Status</th></tr></thead><tbody>' +
         st.data.aidPeriods.map(function (p) {
           return '<tr><td class="t-mono t-caption">' + esc(p.id) + '</td><td><strong>' + esc(p.label) + '</strong></td><td>' + esc(p.dateRange) + '</td><td><span class="badge ' + (p.status === 'Aktif Berjalan' ? 'badge-emerald' : 'badge-neutral') + '">' + esc(p.status) + '</span></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else {
       body = '<div class="card flex-col gap-16">' +
         '<h3 class="t-h3">Rekapitulasi &amp; Pengaturan Publikasi Agregat (BR-B06)</h3>' +
-        '<table class="table"><thead><tr><th>Program</th><th>Tersalurkan / Kuota</th><th>Tampilkan Agregat di Website Publik?</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Program</th><th>Tersalurkan / Kuota</th><th>Tampilkan Agregat di Website Publik?</th></tr></thead><tbody>' +
         st.data.aidPrograms.map(function (p) {
           return '<tr><td><strong>' + esc(p.name) + '</strong></td><td>' + p.disalurkan + ' / ' + p.kuota + ' KPM</td>' +
             '<td><label class="switch"><input type="checkbox" ' + (p.publicPublish ? 'checked' : '') + ' ' + (!canK ? 'disabled' : '') + ' data-action="toggle-aid-public" data-id="' + esc(p.id) + '"><span class="switch-track"><span class="switch-thumb"></span></span><span class="t-caption">' + (p.publicPublish ? 'Publik (Agregat)' : 'Internal Saja') + '</span></label></td></tr>';
         }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     }
 
@@ -5628,12 +6024,12 @@ body.demo-bar-hidden .admin-topbar {
           '<div class="flex-col gap-12">' +
             '<h3 class="t-h3">Ringkasan Laporan: ' + esc((reportTypes.find(function (r) { return r.id === st.laporanType; }) || reportTypes[0]).label) + '</h3>' +
             '<p class="t-sm t-secondary">Seluruh laporan ditarik otomatis dari satu basis data terintegrasi tanpa input ulang (G-5, G-7). Ekspor hanya aktif untuk peran berwenang sesuai matriks RBAC.</p>' +
-            '<table class="table"><thead><tr><th>Metrik</th><th>Nilai</th></tr></thead><tbody>' +
+            '<div class="table-wrap"><table class="table"><thead><tr><th>Metrik</th><th>Nilai</th></tr></thead><tbody>' +
               '<tr><td>Total Penduduk Tercatat</td><td><strong>' + st.data.statistik.totalPenduduk.toLocaleString('id-ID') + ' jiwa</strong></td></tr>' +
               '<tr><td>Total Pengajuan Surat</td><td><strong>' + st.data.requests.length + ' permohonan</strong></td></tr>' +
               '<tr><td>Total Arsip Digital</td><td><strong>' + st.data.archives.length + ' dokumen</strong></td></tr>' +
               '<tr><td>Catatan Penyaluran Bantuan</td><td><strong>' + st.data.aidRecipients.length + ' entri contoh</strong></td></tr>' +
-            '</tbody></table>' +
+            '</tbody></table></div>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -5655,13 +6051,13 @@ body.demo-bar-hidden .admin-topbar {
     return '<div class="flex-col gap-20">' +
       '<div class="card">' +
         '<div class="card-header"><h3 class="t-h3">Daftar Akun Pengguna Internal (Multi-Peran Didukung)</h3><button type="button" class="btn btn-sm btn-accent" data-action="open-add-user">' + icon('plus', 'icon-sm') + ' Tambah Pengguna</button></div>' +
-        '<table class="table"><thead><tr><th>Nama &amp; Username</th><th>Email</th><th>Peran (RBAC)</th><th>Login Terakhir</th><th>Status</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Nama &amp; Username</th><th>Email</th><th>Peran (RBAC)</th><th>Login Terakhir</th><th>Status</th></tr></thead><tbody>' +
           st.data.users.map(function (u) {
             return '<tr><td><strong>' + esc(u.name) + '</strong><div class="t-mono t-caption t-muted">' + esc(u.username) + '</div></td><td class="t-sm">' + esc(u.email) + '</td><td>' +
               u.roles.map(function (rid) { return '<span class="badge badge-navy" style="margin-right:4px">' + esc(w.DesaApp.getRoleInfo(rid).label) + '</span>'; }).join('') +
               '</td><td class="t-caption">' + esc(u.lastLogin) + '</td><td><span class="badge badge-emerald">' + (u.active ? 'Aktif' : 'Nonaktif') + '</span></td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>' +
 
       '<div class="card">' +
@@ -5692,7 +6088,7 @@ body.demo-bar-hidden .admin-topbar {
     return '<div class="card flex-col gap-16">' +
       '<div class="flex items-center justify-between flex-wrap gap-12">' +
         '<div><h3 class="t-h3">Log Aktivitas Audit (Tidak Dapat Diubah Pengguna Biasa)</h3><p class="t-caption t-muted">Setiap aksi yang Anda lakukan di prototipe ini otomatis tercatat di sini (LOG-01).</p></div>' +
-        '<select class="select" style="width:220px" data-action="set-select" data-key="logFilter">' +
+        '<select class="select filter-control" data-action="set-select" data-key="logFilter">' +
           ['Semua', 'Pengajuan', 'Perubahan Status', 'Penerbitan', 'Login', 'Impor', 'Bantuan', 'Backup'].map(function (f) {
             return '<option value="' + f + '"' + (st.logFilter === f ? ' selected' : '') + '>' + f + '</option>';
           }).join('') +
@@ -5744,21 +6140,21 @@ body.demo-bar-hidden .admin-topbar {
         '<div class="card-header"><div><h3 class="t-h3">Cadangan Data Terjadwal &amp; Uji Pemulihan (RPO ≤ 24 Jam, RTO ≤ 8 Jam)</h3><div class="t-caption t-muted">Database PostgreSQL + Dokumen Privat disimpan terenkripsi ke penyimpanan di luar VPS.</div></div>' +
           '<div class="flex gap-8"><button type="button" class="btn btn-sm btn-accent" data-action="run-backup">' + icon('database', 'icon-sm') + ' Jalankan Backup Sekarang</button></div>' +
         '</div>' +
-        '<table class="table"><thead><tr><th>Waktu</th><th>Ukuran</th><th>Cakupan</th><th>Lokasi</th><th>Status</th><th>Uji Restore</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Waktu</th><th>Ukuran</th><th>Cakupan</th><th>Lokasi</th><th>Status</th><th>Uji Restore</th></tr></thead><tbody>' +
           st.data.backups.map(function (b) {
             return '<tr><td><strong>' + esc(b.time) + '</strong></td><td>' + esc(b.size) + '</td><td class="t-sm">' + esc(b.type) + '</td><td class="t-sm">' + esc(b.location) + '</td><td><span class="badge badge-emerald">' + esc(b.status) + '</span></td><td><button type="button" class="btn btn-sm btn-outline" data-action="toast" data-msg="Simulasi uji pemulihan (restore check) untuk ' + esc(b.id) + ' lulus.">Uji Restore</button></td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     } else {
       body = '<div class="card flex-col gap-12">' +
         '<h3 class="t-h3">Keamanan Akun, Retensi Dokumen &amp; Pengaturan Umum</h3>' +
-        '<table class="table"><tbody>' +
+        '<div class="table-wrap"><table class="table"><tbody>' +
           '<tr><td>Pembatasan Percobaan Login</td><td><strong>Aktif</strong> (Maks 5 kali gagal, kunci sementara 15 menit)</td></tr>' +
           '<tr><td>Ambang Penyembunyian Statistik Kecil (BR-T04)</td><td><strong>&lt; ' + s.smallGroupThreshold + ' jiwa</strong></td></tr>' +
           '<tr><td>Retensi Dokumen Persyaratan Pengajuan</td><td><strong>' + s.retentionMonths + ' bulan</strong> (sesuai kesepakatan pemerintah desa)</td></tr>' +
           '<tr><td>Mode Tema Panel Admin</td><td><strong>Perfect Squircle</strong> (' + (st.adminTheme === 'dark' ? 'Gelap' : 'Terang') + ')</td></tr>' +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     }
 
@@ -6058,11 +6454,11 @@ body.demo-bar-hidden .admin-topbar {
         '<div class="news-thumb mb-16" style="max-height:220px">' + ill.cardScene(pt.scene, pt.name) + '</div>' +
         '<div class="flex items-center gap-8 mb-12"><span class="badge badge-emerald">' + esc(pt.category) + '</span><span class="t-caption t-muted">' + esc(pt.location) + '</span></div>' +
         '<p class="t-body">' + esc(pt.desc) + '</p>' +
-        '<table class="table mt-16"><tbody>' +
+        '<div class="table-wrap"><table class="table mt-16"><tbody>' +
           '<tr><td class="t-muted">Produk / Hasil</td><td><strong>' + esc(pt.product) + '</strong></td></tr>' +
           '<tr><td class="t-muted">Pengelola</td><td>' + esc(pt.manager) + '</td></tr>' +
           '<tr><td class="t-muted">Kontak Informasi</td><td>' + esc(pt.contact) + '</td></tr>' +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-outline" data-modal-close="1">Tutup</button>' +
         (pt.markerId ? '<button type="button" class="btn btn-accent" data-action="jump-map-marker" data-marker="' + esc(pt.markerId) + '">' + icon('pin', 'icon-sm') + ' Lihat di Peta Administrasi</button>' : '')
       );
@@ -6113,12 +6509,12 @@ body.demo-bar-hidden .admin-topbar {
       var rows = st.data.importPreviewRows;
       return modalWrap('Impor Excel / CSV Data Kependudukan (Validasi 2 Tahap BR-P05)',
         '<div class="alert alert-info mb-16">' + icon('info') + '<div><strong>Tahap 1 — Pratinjau &amp; Validasi:</strong> Baris error format otomatis ditolak, sedangkan baris terindikasi ganda memberi peringatan agar diputuskan oleh operator.</div></div>' +
-        '<table class="table"><thead><tr><th>Baris</th><th>NIK (Contoh)</th><th>Nama</th><th>Dusun</th><th>Hasil Validasi</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Baris</th><th>NIK (Contoh)</th><th>Nama</th><th>Dusun</th><th>Hasil Validasi</th></tr></thead><tbody>' +
           rows.map(function (r) {
             var b = r.state === 'Valid' ? 'badge-emerald' : r.state === 'Peringatan Ganda' ? 'badge-warning' : 'badge-danger';
             return '<tr><td>#' + r.row + '</td><td class="t-mono t-caption">' + esc(r.nik) + '</td><td><strong>' + esc(r.name) + '</strong><div class="t-caption t-muted">' + esc(r.note) + '</div></td><td>' + esc(r.dusun) + '</td><td><span class="badge ' + b + '">' + esc(r.state) + '</span></td></tr>';
           }).join('') +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-outline" data-modal-close="1">Batal</button>' +
         '<button type="button" class="btn btn-accent" data-action="confirm-import"' + (st.importConfirmed ? ' disabled' : '') + '>' + (st.importConfirmed ? 'Sudah Diimpor' : 'Konfirmasi Simpan 3 Baris Valid') + '</button>', 'is-wide'
       );
@@ -6128,12 +6524,12 @@ body.demo-bar-hidden .admin-topbar {
       var rs = st.data.residents.find(function (p) { return p.id === modalState.id; });
       if (!rs) return '';
       return modalWrap('Detail Penduduk Internal (' + esc(rs.id) + ')',
-        '<table class="table"><tbody>' +
+        '<div class="table-wrap"><table class="table"><tbody>' +
           '<tr><td class="t-muted">NIK</td><td class="t-mono">' + esc(w.DesaApp.formatNik(rs.nik)) + '</td></tr>' +
           '<tr><td class="t-muted">Nama / TTL</td><td><strong>' + esc(rs.name) + '</strong> • ' + esc(rs.ttl) + '</td></tr>' +
           '<tr><td class="t-muted">Wilayah</td><td>' + esc(rs.dusun) + ' RT ' + esc(rs.rt) + ' / RW ' + esc(rs.rw) + '</td></tr>' +
           '<tr><td class="t-muted">Pendidikan / Kerja</td><td>' + esc(rs.education) + ' • ' + esc(rs.job) + '</td></tr>' +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
         '<h3 class="t-h3 mt-16 mb-8">Riwayat Perubahan Data (BR-P06)</h3>' +
         '<ul class="flex-col gap-6 t-sm">' + rs.history.map(function (h) { return '<li>• ' + esc(h) + '</li>'; }).join('') + '</ul>',
         '<button type="button" class="btn btn-primary" data-modal-close="1">Tutup</button>'
@@ -6181,12 +6577,12 @@ body.demo-bar-hidden .admin-topbar {
       var recs = st.data.aidRecipients.filter(function (b) { return b.residentId === modalState.resId; });
       var rName = recs.length ? recs[0].residentName : modalState.resId;
       return modalWrap('Riwayat Bantuan: ' + esc(rName),
-        '<table class="table"><thead><tr><th>Program</th><th>Periode</th><th>Bentuk</th><th>Status</th><th>Referensi</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Program</th><th>Periode</th><th>Bentuk</th><th>Status</th><th>Referensi</th></tr></thead><tbody>' +
           recs.map(function (b) {
             var prg = st.data.aidPrograms.find(function (p) { return p.id === b.programId; });
             return '<tr><td><strong>' + esc(prg ? prg.name : b.programId) + '</strong></td><td>' + esc(b.periodId) + '</td><td>' + esc(b.amount) + '</td><td>' + esc(b.status) + '</td><td class="t-caption">' + esc(b.verifyRef) + '</td></tr>';
           }).join('') +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-primary" data-modal-close="1">Tutup</button>'
       );
     }
@@ -6196,12 +6592,12 @@ body.demo-bar-hidden .admin-topbar {
       if (!ar) return '';
       return modalWrap('Pratinjau Arsip Digital: ' + esc(ar.number),
         '<div class="alert alert-info mb-16">' + icon('lock') + '<div>Klasifikasi Akses: <strong>' + esc(ar.access) + '</strong>. Dokumen disimpan di storage privat dan hanya dapat diunduh melalui otorisasi server (BR-A05).</div></div>' +
-        '<table class="table mb-16"><tbody>' +
+        '<div class="table-wrap"><table class="table mb-16"><tbody>' +
           '<tr><td class="t-muted">Perihal</td><td><strong>' + esc(ar.subject) + '</strong></td></tr>' +
           '<tr><td class="t-muted">Kategori</td><td>' + esc(ar.category) + '</td></tr>' +
           '<tr><td class="t-muted">Tanggal / Pihak</td><td>' + esc(ar.letterDate) + ' • ' + esc(ar.party) + '</td></tr>' +
           '<tr><td class="t-muted">Catatan</td><td>' + esc(ar.note) + '</td></tr>' +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-primary" data-modal-close="1">Tutup</button>'
       );
     }
@@ -6337,6 +6733,8 @@ body.demo-bar-hidden .admin-topbar {
   function navigate(target) {
     var st = w.DesaApp.state;
     st.notifOpen = false;
+    st.pubMobileMenuOpen = false;
+    st.adminSidebarOpen = false;
     if (target === 'login') { st.area = 'login'; }
     else if (target === 'design-system') { st.area = 'design-system'; }
     else if (target.indexOf('public:') === 0) {
@@ -6400,6 +6798,21 @@ body.demo-bar-hidden .admin-topbar {
     switch (act) {
       case 'toggle-demo-bar':
         st.demoBarCollapsed = !st.demoBarCollapsed;
+        render();
+        break;
+      case 'toggle-pub-menu':
+        st.pubMobileMenuOpen = !st.pubMobileMenuOpen;
+        st.adminSidebarOpen = false;
+        render();
+        break;
+      case 'toggle-admin-sidebar':
+        st.adminSidebarOpen = !st.adminSidebarOpen;
+        st.notifOpen = false;
+        render();
+        break;
+      case 'close-mobile-menus':
+        st.pubMobileMenuOpen = false;
+        st.adminSidebarOpen = false;
         render();
         break;
       case 'copy-hex':
@@ -7007,34 +7420,45 @@ body.demo-bar-hidden .admin-topbar {
         if (st.cmdkOpen) setTimeout(function () { var el = document.getElementById('cmdk-input-el'); if (el) el.focus(); }, 20);
       }
     } else if (e.key === 'Escape') {
-      if (st.cmdkOpen || modalState || st.notifOpen) {
+      if (st.cmdkOpen || modalState || st.notifOpen || st.pubMobileMenuOpen || st.adminSidebarOpen) {
         st.cmdkOpen = false;
         modalState = null;
         st.notifOpen = false;
+        st.pubMobileMenuOpen = false;
+        st.adminSidebarOpen = false;
         render();
       }
     }
   });
 
-  // Map Drag Pan Support
+  // Map Drag Pan Support (Mouse + Touch)
   var dragging = false, dragStartX = 0, dragStartY = 0, origPanX = 0, origPanY = 0;
-  document.addEventListener('mousedown', function (e) {
-    var stage = e.target.closest('#map-drag-stage');
-    if (!stage || e.target.closest('.map-pin')) return;
+  function startMapDrag(clientX, clientY, target) {
+    var stage = target && target.closest ? target.closest('#map-drag-stage') : null;
+    if (!stage || target.closest('.map-pin')) return;
     dragging = true;
-    dragStartX = e.clientX;
-    dragStartY = e.clientY;
+    dragStartX = clientX;
+    dragStartY = clientY;
     origPanX = w.DesaApp.state.mapPanX;
     origPanY = w.DesaApp.state.mapPanY;
-  });
-  document.addEventListener('mousemove', function (e) {
+  }
+  function moveMapDrag(clientX, clientY) {
     if (!dragging) return;
-    w.DesaApp.state.mapPanX = Math.max(-180, Math.min(180, origPanX + (e.clientX - dragStartX)));
-    w.DesaApp.state.mapPanY = Math.max(-140, Math.min(140, origPanY + (e.clientY - dragStartY)));
+    w.DesaApp.state.mapPanX = Math.max(-180, Math.min(180, origPanX + (clientX - dragStartX)));
+    w.DesaApp.state.mapPanY = Math.max(-140, Math.min(140, origPanY + (clientY - dragStartY)));
     var g = document.getElementById('map-viewport-group');
     if (g) g.setAttribute('transform', 'translate(' + w.DesaApp.state.mapPanX + ',' + w.DesaApp.state.mapPanY + ') scale(' + w.DesaApp.state.mapZoom + ')');
-  });
+  }
+  document.addEventListener('mousedown', function (e) { startMapDrag(e.clientX, e.clientY, e.target); });
+  document.addEventListener('mousemove', function (e) { moveMapDrag(e.clientX, e.clientY); });
   document.addEventListener('mouseup', function () { dragging = false; });
+  document.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 1) startMapDrag(e.touches[0].clientX, e.touches[0].clientY, e.target);
+  }, { passive: true });
+  document.addEventListener('touchmove', function (e) {
+    if (dragging && e.touches.length === 1) moveMapDrag(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+  document.addEventListener('touchend', function () { dragging = false; });
 
   w.addEventListener('hashchange', parseHash);
   w.addEventListener('DOMContentLoaded', function () {

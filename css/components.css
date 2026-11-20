@@ -986,3 +986,62 @@
   from { opacity: 0; transform: translateX(24px); }
   to { opacity: 1; transform: translateX(0); }
 }
+
+/* ==========================================================================
+   RESPONSIVE COMPONENTS — Laptop, Tablet & Mobile (360px+)
+   ========================================================================== */
+
+@media (max-width: 1240px) {
+  .demo-bar-title { display: none; }
+}
+
+@media (max-width: 1023px) {
+  .demo-bar { padding: 0 12px; gap: 10px; }
+  .demo-bar-left { display: none; }
+  .demo-bar-tabs {
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .demo-bar-tabs::-webkit-scrollbar { display: none; }
+}
+
+@media (max-width: 639px) {
+  .demo-bar-btn { padding: 5px 8px; }
+  .demo-fab {
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    right: 14px;
+    padding: 9px 14px;
+  }
+  .card { padding: 16px; border-radius: 18px; }
+  .stat-card { padding: 16px; border-radius: 18px; }
+  .stat-value { font-size: 25px; }
+  .card-header { flex-wrap: wrap; }
+  .input, .select, .textarea { font-size: 16px; min-height: 44px; }
+  .btn:not(.btn-sm) { min-height: 42px; }
+  .seg-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .seg-tabs::-webkit-scrollbar { display: none; }
+  .seg-tab { flex-shrink: 0; }
+  .stepper { flex-direction: column; align-items: stretch; gap: 10px; }
+  .step-line { display: none; }
+  .modal-backdrop { padding: 10px; }
+  .modal-panel { border-radius: 20px; max-height: calc(100dvh - 20px); }
+  .modal-head, .modal-body, .modal-foot { padding: 14px 16px; }
+  .modal-foot { flex-wrap: wrap; }
+  .drawer-panel { width: 100vw; height: 100dvh; border-left: none; }
+  .cmdk-panel { margin-top: 16px; border-radius: 18px; }
+  .letter-paper { padding: 18px 16px; }
+  .letter-kop { flex-direction: column; gap: 8px; }
+  .toast-stack { bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .toast { min-width: 0; width: calc(100vw - 24px); max-width: 440px; }
+  .pagination { flex-direction: column; align-items: flex-start; }
+  .empty-state { padding: 28px 16px; }
+}

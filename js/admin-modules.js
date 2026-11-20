@@ -30,9 +30,9 @@
       body = '<div class="flex-col gap-16">' +
         '<div class="card">' +
           '<div class="flex items-center justify-between flex-wrap gap-12 mb-16">' +
-            '<div class="flex items-center gap-10 flex-wrap">' +
-              '<div class="input-with-icon" style="width:260px">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari No. Reg atau nama pemohon..." value="' + esc(st.adminRequestSearch) + '" data-action="filter-search" data-key="adminRequestSearch"></div>' +
-              '<select class="select" style="width:210px" data-action="set-select" data-key="adminRequestFilter">' +
+            '<div class="flex items-center gap-10 flex-wrap flex-1">' +
+              '<div class="input-with-icon filter-control">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari No. Reg atau nama pemohon..." value="' + esc(st.adminRequestSearch) + '" data-action="filter-search" data-key="adminRequestSearch"></div>' +
+              '<select class="select filter-control" data-action="set-select" data-key="adminRequestFilter">' +
                 statuses.map(function (s) { return '<option value="' + esc(s) + '"' + (st.adminRequestFilter === s ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') +
               '</select>' +
             '</div>' +
@@ -92,9 +92,9 @@
       });
       body = '<div class="card flex-col gap-16">' +
         '<div class="flex items-center justify-between flex-wrap gap-12">' +
-          '<div class="flex items-center gap-10 flex-wrap">' +
-            '<div class="input-with-icon" style="width:240px">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nomor / perihal arsip..." value="' + esc(st.archiveSearch) + '" data-action="filter-search" data-key="archiveSearch"></div>' +
-            '<select class="select" style="width:220px" data-action="set-select" data-key="archiveCategoryFilter">' +
+          '<div class="flex items-center gap-10 flex-wrap flex-1">' +
+            '<div class="input-with-icon filter-control">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nomor / perihal arsip..." value="' + esc(st.archiveSearch) + '" data-action="filter-search" data-key="archiveSearch"></div>' +
+            '<select class="select filter-control" data-action="set-select" data-key="archiveCategoryFilter">' +
               arCats.map(function (c) { return '<option value="' + esc(c) + '"' + (st.archiveCategoryFilter === c ? ' selected' : '') + '>' + esc(c) + '</option>'; }).join('') +
             '</select>' +
           '</div>' +
@@ -167,20 +167,20 @@
       }).join('') + '</div>';
     } else if (tab === 'periode') {
       body = '<div class="card"><h3 class="t-h3 mb-12">Periode Penyaluran Bantuan</h3>' +
-        '<table class="table"><thead><tr><th>ID</th><th>Label Periode</th><th>Rentang Tanggal</th><th>Status</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Label Periode</th><th>Rentang Tanggal</th><th>Status</th></tr></thead><tbody>' +
         st.data.aidPeriods.map(function (p) {
           return '<tr><td class="t-mono t-caption">' + esc(p.id) + '</td><td><strong>' + esc(p.label) + '</strong></td><td>' + esc(p.dateRange) + '</td><td><span class="badge ' + (p.status === 'Aktif Berjalan' ? 'badge-emerald' : 'badge-neutral') + '">' + esc(p.status) + '</span></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else {
       body = '<div class="card flex-col gap-16">' +
         '<h3 class="t-h3">Rekapitulasi &amp; Pengaturan Publikasi Agregat (BR-B06)</h3>' +
-        '<table class="table"><thead><tr><th>Program</th><th>Tersalurkan / Kuota</th><th>Tampilkan Agregat di Website Publik?</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Program</th><th>Tersalurkan / Kuota</th><th>Tampilkan Agregat di Website Publik?</th></tr></thead><tbody>' +
         st.data.aidPrograms.map(function (p) {
           return '<tr><td><strong>' + esc(p.name) + '</strong></td><td>' + p.disalurkan + ' / ' + p.kuota + ' KPM</td>' +
             '<td><label class="switch"><input type="checkbox" ' + (p.publicPublish ? 'checked' : '') + ' ' + (!canK ? 'disabled' : '') + ' data-action="toggle-aid-public" data-id="' + esc(p.id) + '"><span class="switch-track"><span class="switch-thumb"></span></span><span class="t-caption">' + (p.publicPublish ? 'Publik (Agregat)' : 'Internal Saja') + '</span></label></td></tr>';
         }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     }
 
@@ -228,12 +228,12 @@
           '<div class="flex-col gap-12">' +
             '<h3 class="t-h3">Ringkasan Laporan: ' + esc((reportTypes.find(function (r) { return r.id === st.laporanType; }) || reportTypes[0]).label) + '</h3>' +
             '<p class="t-sm t-secondary">Seluruh laporan ditarik otomatis dari satu basis data terintegrasi tanpa input ulang (G-5, G-7). Ekspor hanya aktif untuk peran berwenang sesuai matriks RBAC.</p>' +
-            '<table class="table"><thead><tr><th>Metrik</th><th>Nilai</th></tr></thead><tbody>' +
+            '<div class="table-wrap"><table class="table"><thead><tr><th>Metrik</th><th>Nilai</th></tr></thead><tbody>' +
               '<tr><td>Total Penduduk Tercatat</td><td><strong>' + st.data.statistik.totalPenduduk.toLocaleString('id-ID') + ' jiwa</strong></td></tr>' +
               '<tr><td>Total Pengajuan Surat</td><td><strong>' + st.data.requests.length + ' permohonan</strong></td></tr>' +
               '<tr><td>Total Arsip Digital</td><td><strong>' + st.data.archives.length + ' dokumen</strong></td></tr>' +
               '<tr><td>Catatan Penyaluran Bantuan</td><td><strong>' + st.data.aidRecipients.length + ' entri contoh</strong></td></tr>' +
-            '</tbody></table>' +
+            '</tbody></table></div>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -255,13 +255,13 @@
     return '<div class="flex-col gap-20">' +
       '<div class="card">' +
         '<div class="card-header"><h3 class="t-h3">Daftar Akun Pengguna Internal (Multi-Peran Didukung)</h3><button type="button" class="btn btn-sm btn-accent" data-action="open-add-user">' + icon('plus', 'icon-sm') + ' Tambah Pengguna</button></div>' +
-        '<table class="table"><thead><tr><th>Nama &amp; Username</th><th>Email</th><th>Peran (RBAC)</th><th>Login Terakhir</th><th>Status</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Nama &amp; Username</th><th>Email</th><th>Peran (RBAC)</th><th>Login Terakhir</th><th>Status</th></tr></thead><tbody>' +
           st.data.users.map(function (u) {
             return '<tr><td><strong>' + esc(u.name) + '</strong><div class="t-mono t-caption t-muted">' + esc(u.username) + '</div></td><td class="t-sm">' + esc(u.email) + '</td><td>' +
               u.roles.map(function (rid) { return '<span class="badge badge-navy" style="margin-right:4px">' + esc(w.DesaApp.getRoleInfo(rid).label) + '</span>'; }).join('') +
               '</td><td class="t-caption">' + esc(u.lastLogin) + '</td><td><span class="badge badge-emerald">' + (u.active ? 'Aktif' : 'Nonaktif') + '</span></td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>' +
 
       '<div class="card">' +
@@ -292,7 +292,7 @@
     return '<div class="card flex-col gap-16">' +
       '<div class="flex items-center justify-between flex-wrap gap-12">' +
         '<div><h3 class="t-h3">Log Aktivitas Audit (Tidak Dapat Diubah Pengguna Biasa)</h3><p class="t-caption t-muted">Setiap aksi yang Anda lakukan di prototipe ini otomatis tercatat di sini (LOG-01).</p></div>' +
-        '<select class="select" style="width:220px" data-action="set-select" data-key="logFilter">' +
+        '<select class="select filter-control" data-action="set-select" data-key="logFilter">' +
           ['Semua', 'Pengajuan', 'Perubahan Status', 'Penerbitan', 'Login', 'Impor', 'Bantuan', 'Backup'].map(function (f) {
             return '<option value="' + f + '"' + (st.logFilter === f ? ' selected' : '') + '>' + f + '</option>';
           }).join('') +
@@ -344,21 +344,21 @@
         '<div class="card-header"><div><h3 class="t-h3">Cadangan Data Terjadwal &amp; Uji Pemulihan (RPO ≤ 24 Jam, RTO ≤ 8 Jam)</h3><div class="t-caption t-muted">Database PostgreSQL + Dokumen Privat disimpan terenkripsi ke penyimpanan di luar VPS.</div></div>' +
           '<div class="flex gap-8"><button type="button" class="btn btn-sm btn-accent" data-action="run-backup">' + icon('database', 'icon-sm') + ' Jalankan Backup Sekarang</button></div>' +
         '</div>' +
-        '<table class="table"><thead><tr><th>Waktu</th><th>Ukuran</th><th>Cakupan</th><th>Lokasi</th><th>Status</th><th>Uji Restore</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Waktu</th><th>Ukuran</th><th>Cakupan</th><th>Lokasi</th><th>Status</th><th>Uji Restore</th></tr></thead><tbody>' +
           st.data.backups.map(function (b) {
             return '<tr><td><strong>' + esc(b.time) + '</strong></td><td>' + esc(b.size) + '</td><td class="t-sm">' + esc(b.type) + '</td><td class="t-sm">' + esc(b.location) + '</td><td><span class="badge badge-emerald">' + esc(b.status) + '</span></td><td><button type="button" class="btn btn-sm btn-outline" data-action="toast" data-msg="Simulasi uji pemulihan (restore check) untuk ' + esc(b.id) + ' lulus.">Uji Restore</button></td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     } else {
       body = '<div class="card flex-col gap-12">' +
         '<h3 class="t-h3">Keamanan Akun, Retensi Dokumen &amp; Pengaturan Umum</h3>' +
-        '<table class="table"><tbody>' +
+        '<div class="table-wrap"><table class="table"><tbody>' +
           '<tr><td>Pembatasan Percobaan Login</td><td><strong>Aktif</strong> (Maks 5 kali gagal, kunci sementara 15 menit)</td></tr>' +
           '<tr><td>Ambang Penyembunyian Statistik Kecil (BR-T04)</td><td><strong>&lt; ' + s.smallGroupThreshold + ' jiwa</strong></td></tr>' +
           '<tr><td>Retensi Dokumen Persyaratan Pengajuan</td><td><strong>' + s.retentionMonths + ' bulan</strong> (sesuai kesepakatan pemerintah desa)</td></tr>' +
           '<tr><td>Mode Tema Panel Admin</td><td><strong>Perfect Squircle</strong> (' + (st.adminTheme === 'dark' ? 'Gelap' : 'Terang') + ')</td></tr>' +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     }
 

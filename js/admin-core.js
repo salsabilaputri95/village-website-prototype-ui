@@ -111,7 +111,7 @@
       '</div>' +
 
       '<!-- Antrean Perlu Tindakan & Grafik -->' +
-      '<div class="grid" style="grid-template-columns:1.35fr 0.95fr;gap:20px;align-items:start">' +
+      '<div class="grid-asym-main">' +
         '<div class="card">' +
           '<div class="card-header">' +
             '<div><h2 class="t-h3">Pengajuan yang Membutuhkan Tindakan</h2><div class="t-caption t-muted">Disesuaikan dengan peran ' + esc(role.label) + '</div></div>' +
@@ -201,52 +201,52 @@
     } else if (tab === 'profil') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Data Perangkat Desa (Tampil di Profil Desa)</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-perangkat">' + icon('plus', 'icon-sm') + ' Tambah Perangkat</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Nama</th><th>Jabatan</th><th>Bidang</th><th>Masa Jabatan</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Nama</th><th>Jabatan</th><th>Bidang</th><th>Masa Jabatan</th></tr></thead><tbody>' +
         st.data.profil.perangkat.map(function (p) {
           return '<tr><td><strong>' + esc(p.nama) + '</strong></td><td><span class="badge badge-emerald">' + esc(p.jabatan) + '</span></td><td>' + esc(p.bidang) + '</td><td>' + esc(p.masa) + '</td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'berita') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Berita (Draft / Terjadwal / Dipublikasikan)</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-news">' + icon('plus', 'icon-sm') + ' Tulis Berita Baru</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Judul Berita</th><th>Kategori</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Judul Berita</th><th>Kategori</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
         st.data.news.map(function (n) {
           return '<tr><td><strong>' + esc(n.title) + '</strong></td><td>' + esc(n.category) + '</td><td>' + esc(n.date) + '</td><td><span class="badge ' + (n.status === 'Dipublikasikan' ? 'badge-emerald' : n.status === 'Terjadwal' ? 'badge-info' : 'badge-neutral') + '">' + esc(n.status) + '</span></td><td>' +
             (!isRO ? '<button type="button" class="btn btn-sm btn-outline" data-action="cycle-news-status" data-id="' + esc(n.id) + '">Ubah Status</button>' : '-') + '</td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'pengumuman') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Pengumuman &amp; Masa Berlaku</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-ann">' + icon('plus', 'icon-sm') + ' Tambah Pengumuman</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Judul</th><th>Penanda</th><th>Berlaku s.d.</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Judul</th><th>Penanda</th><th>Berlaku s.d.</th><th>Status</th><th>Aksi</th></tr></thead><tbody>' +
         st.data.announcements.map(function (a) {
           return '<tr><td><strong>' + esc(a.title) + '</strong></td><td>' + (a.important ? '<span class="badge badge-warning">PENTING</span>' : '<span class="badge badge-neutral">Normal</span>') + '</td><td>' + esc(a.validUntil) + '</td><td><span class="badge ' + (a.status === 'Dipublikasikan' ? 'badge-emerald' : 'badge-neutral') + '">' + esc(a.status) + '</span></td><td>' +
             (!isRO ? '<button type="button" class="btn btn-sm btn-outline" data-action="toggle-ann-imp" data-id="' + esc(a.id) + '">Toggle Penting</button>' : '-') + '</td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'gallery') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Album Foto &amp; Tautan Video</h3>' +
         (!isRO ? '<button type="button" class="btn btn-sm btn-accent" data-action="open-add-gallery">' + icon('plus', 'icon-sm') + ' Tambah Album/Video</button>' : '') +
-        '</div><table class="table"><thead><tr><th>Judul</th><th>Tipe</th><th>Kategori</th><th>Lokasi</th><th>Status</th></tr></thead><tbody>' +
+        '</div><div class="table-wrap"><table class="table"><thead><tr><th>Judul</th><th>Tipe</th><th>Kategori</th><th>Lokasi</th><th>Status</th></tr></thead><tbody>' +
         st.data.gallery.map(function (g) {
           return '<tr><td><strong>' + esc(g.title) + '</strong></td><td><span class="badge badge-navy">' + esc(g.type) + '</span></td><td>' + esc(g.category) + '</td><td>' + esc(g.location) + '</td><td><span class="badge badge-emerald">' + esc(g.status) + '</span></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else if (tab === 'layanan') {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Layanan Desa &amp; Sakelar Pengajuan Online (LYN-04)</h3><span class="t-caption t-muted">Mematikan sakelar langsung menyembunyikan tombol Ajukan Online di Website Publik</span></div>' +
-        '<table class="table"><thead><tr><th>Nama Layanan</th><th>Kategori</th><th>Estimasi</th><th>Unduh PDF Warga</th><th>Opsi Online Aktif</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Nama Layanan</th><th>Kategori</th><th>Estimasi</th><th>Unduh PDF Warga</th><th>Opsi Online Aktif</th></tr></thead><tbody>' +
         st.data.services.map(function (sv) {
           return '<tr><td><strong>' + esc(sv.name) + '</strong></td><td>' + esc(sv.kategori) + '</td><td>' + esc(sv.estimate) + '</td><td>' + (sv.allowCitizenDownload ? 'Diizinkan' : 'Fisik Saja') + '</td>' +
             '<td><label class="switch"><input type="checkbox" ' + (sv.onlineEnabled ? 'checked' : '') + ' ' + (isRO ? 'disabled' : '') + ' data-action="toggle-service-online" data-id="' + esc(sv.id) + '"><span class="switch-track"><span class="switch-thumb"></span></span><span class="t-caption">' + (sv.onlineEnabled ? 'Aktif' : 'Nonaktif') + '</span></label></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     } else {
       body = '<div class="card"><div class="card-header"><h3 class="t-h3">Manajemen Katalog Potensi Desa</h3><button type="button" class="btn btn-sm btn-outline" data-nav="public:potensi">Lihat Katalog Publik</button></div>' +
-        '<table class="table"><thead><tr><th>Nama Potensi</th><th>Kategori</th><th>Lokasi</th><th>Marker Peta</th><th>Status</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Nama Potensi</th><th>Kategori</th><th>Lokasi</th><th>Marker Peta</th><th>Status</th></tr></thead><tbody>' +
         st.data.potentials.map(function (p) {
           return '<tr><td><strong>' + esc(p.name) + '</strong></td><td>' + esc(p.category) + '</td><td>' + esc(p.location) + '</td><td>' + (p.markerId ? '<span class="badge badge-navy">' + esc(p.markerId) + '</span>' : '<span class="t-muted">-</span>') + '</td><td><span class="badge badge-emerald">' + esc(p.status) + '</span></td></tr>';
         }).join('') +
-        '</tbody></table></div>';
+        '</tbody></table></div></div>';
     }
 
     return '<div class="flex-col gap-16">' +
@@ -288,9 +288,9 @@
         '<div class="alert alert-info">' + icon('shield') + '<div><strong>Batasan Kewenangan (BR-P01–P08):</strong> Modul ini bukan pengganti sistem resmi Dukcapil dan tidak melakukan sinkronisasi otomatis ke Dukcapil. NIK/KK hanya tampil ter-masking untuk staf yang tidak membutuhkan tampilan penuh.</div></div>' +
         '<div class="card">' +
           '<div class="flex items-center justify-between flex-wrap gap-12 mb-16">' +
-            '<div class="flex items-center gap-10 flex-wrap">' +
-              '<div class="input-with-icon" style="width:240px">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nama atau NIK..." value="' + esc(st.residentSearch) + '" data-action="filter-search" data-key="residentSearch"></div>' +
-              '<select class="select" style="width:190px" data-action="set-select" data-key="residentDusunFilter">' +
+            '<div class="flex items-center gap-10 flex-wrap flex-1">' +
+              '<div class="input-with-icon filter-control">' + icon('search', 'icon-sm icon-left') + '<input class="input" placeholder="Cari nama atau NIK..." value="' + esc(st.residentSearch) + '" data-action="filter-search" data-key="residentSearch"></div>' +
+              '<select class="select filter-control" data-action="set-select" data-key="residentDusunFilter">' +
                 ['Semua', 'Dusun Krajan', 'Dusun Sawah Indah', 'Dusun Bukit Makmur', 'Dusun Sumber Jaya'].map(function (d) {
                   return '<option value="' + d + '"' + (st.residentDusunFilter === d ? ' selected' : '') + '>' + d + '</option>';
                 }).join('') +
@@ -338,11 +338,11 @@
             '<button type="button" class="btn btn-sm btn-outline" data-nav="public:peta">Buka Peta Publik</button>' +
           '</div>' +
         '</div>' +
-        '<table class="table"><thead><tr><th>ID</th><th>Nama Lokasi</th><th>Kategori</th><th>Dusun</th><th>Koordinat (Contoh)</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nama Lokasi</th><th>Kategori</th><th>Dusun</th><th>Koordinat (Contoh)</th></tr></thead><tbody>' +
           st.data.mapMarkers.map(function (m) {
             return '<tr><td class="t-mono t-caption">' + esc(m.id) + '</td><td><strong>' + esc(m.name) + '</strong></td><td><span class="badge badge-navy">' + esc(m.category) + '</span></td><td>' + esc(m.dusun) + '</td><td class="t-mono t-caption">' + esc(m.coords) + '</td></tr>';
           }).join('') +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
       '</div>';
     }
 
@@ -394,10 +394,12 @@
     }
 
     return '<div class="admin-shell" data-admin-theme="' + esc(st.adminTheme) + '">' +
-      '<aside class="admin-sidebar">' +
+      (st.adminSidebarOpen ? '<div class="admin-sidebar-backdrop" data-action="close-mobile-menus"></div>' : '') +
+      '<aside class="admin-sidebar' + (st.adminSidebarOpen ? ' is-open' : '') + '">' +
         '<div class="admin-sidebar-head">' +
           '<div class="admin-logo-sq">' + icon('building') + '</div>' +
-          '<div><div style="font-weight:700;font-size:14.5px">Portal Admin Desa</div><div class="t-caption t-muted">' + esc(st.data.site.villageName) + '</div></div>' +
+          '<div class="flex-1"><div style="font-weight:700;font-size:14.5px">Portal Admin Desa</div><div class="t-caption t-muted">' + esc(st.data.site.villageName) + '</div></div>' +
+          '<button type="button" class="icon-circle-btn admin-sidebar-close" data-action="close-mobile-menus" aria-label="Tutup menu admin">' + icon('x', 'icon-sm') + '</button>' +
         '</div>' +
 
         '<nav class="admin-nav" aria-label="Navigasi Admin">' +
@@ -420,13 +422,14 @@
 
       '<div class="admin-main-col">' +
         '<header class="admin-topbar">' +
-          '<div class="flex items-center gap-12">' +
-            '<h1 class="t-h3">' + esc(activeNav.id === 'dashboard' ? 'Dashboard Ringkasan' : activeNav.label) + '</h1>' +
-            '<span class="badge badge-neutral">Tahap 1–5 Terintegrasi</span>' +
+          '<div class="flex items-center gap-12" style="min-width:0">' +
+            '<button type="button" class="icon-circle-btn admin-menu-toggle" data-action="toggle-admin-sidebar" aria-label="Buka menu admin" aria-expanded="' + (st.adminSidebarOpen ? 'true' : 'false') + '">' + icon('menu', 'icon-sm') + '</button>' +
+            '<h1 class="t-h3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(activeNav.id === 'dashboard' ? 'Dashboard Ringkasan' : activeNav.label) + '</h1>' +
+            '<span class="badge badge-neutral admin-stage-badge">Tahap 1–5 Terintegrasi</span>' +
           '</div>' +
           '<div class="admin-topbar-right">' +
-            '<button type="button" class="cmdk-trigger" data-action="open-cmdk">' +
-              '<span class="flex items-center gap-8">' + icon('search', 'icon-sm') + ' Cari cepat...</span>' +
+            '<button type="button" class="cmdk-trigger" data-action="open-cmdk" aria-label="Pencarian cepat">' +
+              '<span class="flex items-center gap-8">' + icon('search', 'icon-sm') + ' <span class="cmdk-label">Cari cepat...</span></span>' +
               '<span class="kbd-pill">Ctrl+K</span>' +
             '</button>' +
 

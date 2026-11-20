@@ -282,11 +282,11 @@
         '<div class="news-thumb mb-16" style="max-height:220px">' + ill.cardScene(pt.scene, pt.name) + '</div>' +
         '<div class="flex items-center gap-8 mb-12"><span class="badge badge-emerald">' + esc(pt.category) + '</span><span class="t-caption t-muted">' + esc(pt.location) + '</span></div>' +
         '<p class="t-body">' + esc(pt.desc) + '</p>' +
-        '<table class="table mt-16"><tbody>' +
+        '<div class="table-wrap"><table class="table mt-16"><tbody>' +
           '<tr><td class="t-muted">Produk / Hasil</td><td><strong>' + esc(pt.product) + '</strong></td></tr>' +
           '<tr><td class="t-muted">Pengelola</td><td>' + esc(pt.manager) + '</td></tr>' +
           '<tr><td class="t-muted">Kontak Informasi</td><td>' + esc(pt.contact) + '</td></tr>' +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-outline" data-modal-close="1">Tutup</button>' +
         (pt.markerId ? '<button type="button" class="btn btn-accent" data-action="jump-map-marker" data-marker="' + esc(pt.markerId) + '">' + icon('pin', 'icon-sm') + ' Lihat di Peta Administrasi</button>' : '')
       );
@@ -337,12 +337,12 @@
       var rows = st.data.importPreviewRows;
       return modalWrap('Impor Excel / CSV Data Kependudukan (Validasi 2 Tahap BR-P05)',
         '<div class="alert alert-info mb-16">' + icon('info') + '<div><strong>Tahap 1 — Pratinjau &amp; Validasi:</strong> Baris error format otomatis ditolak, sedangkan baris terindikasi ganda memberi peringatan agar diputuskan oleh operator.</div></div>' +
-        '<table class="table"><thead><tr><th>Baris</th><th>NIK (Contoh)</th><th>Nama</th><th>Dusun</th><th>Hasil Validasi</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Baris</th><th>NIK (Contoh)</th><th>Nama</th><th>Dusun</th><th>Hasil Validasi</th></tr></thead><tbody>' +
           rows.map(function (r) {
             var b = r.state === 'Valid' ? 'badge-emerald' : r.state === 'Peringatan Ganda' ? 'badge-warning' : 'badge-danger';
             return '<tr><td>#' + r.row + '</td><td class="t-mono t-caption">' + esc(r.nik) + '</td><td><strong>' + esc(r.name) + '</strong><div class="t-caption t-muted">' + esc(r.note) + '</div></td><td>' + esc(r.dusun) + '</td><td><span class="badge ' + b + '">' + esc(r.state) + '</span></td></tr>';
           }).join('') +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-outline" data-modal-close="1">Batal</button>' +
         '<button type="button" class="btn btn-accent" data-action="confirm-import"' + (st.importConfirmed ? ' disabled' : '') + '>' + (st.importConfirmed ? 'Sudah Diimpor' : 'Konfirmasi Simpan 3 Baris Valid') + '</button>', 'is-wide'
       );
@@ -352,12 +352,12 @@
       var rs = st.data.residents.find(function (p) { return p.id === modalState.id; });
       if (!rs) return '';
       return modalWrap('Detail Penduduk Internal (' + esc(rs.id) + ')',
-        '<table class="table"><tbody>' +
+        '<div class="table-wrap"><table class="table"><tbody>' +
           '<tr><td class="t-muted">NIK</td><td class="t-mono">' + esc(w.DesaApp.formatNik(rs.nik)) + '</td></tr>' +
           '<tr><td class="t-muted">Nama / TTL</td><td><strong>' + esc(rs.name) + '</strong> • ' + esc(rs.ttl) + '</td></tr>' +
           '<tr><td class="t-muted">Wilayah</td><td>' + esc(rs.dusun) + ' RT ' + esc(rs.rt) + ' / RW ' + esc(rs.rw) + '</td></tr>' +
           '<tr><td class="t-muted">Pendidikan / Kerja</td><td>' + esc(rs.education) + ' • ' + esc(rs.job) + '</td></tr>' +
-        '</tbody></table>' +
+        '</tbody></table></div>' +
         '<h3 class="t-h3 mt-16 mb-8">Riwayat Perubahan Data (BR-P06)</h3>' +
         '<ul class="flex-col gap-6 t-sm">' + rs.history.map(function (h) { return '<li>• ' + esc(h) + '</li>'; }).join('') + '</ul>',
         '<button type="button" class="btn btn-primary" data-modal-close="1">Tutup</button>'
@@ -405,12 +405,12 @@
       var recs = st.data.aidRecipients.filter(function (b) { return b.residentId === modalState.resId; });
       var rName = recs.length ? recs[0].residentName : modalState.resId;
       return modalWrap('Riwayat Bantuan: ' + esc(rName),
-        '<table class="table"><thead><tr><th>Program</th><th>Periode</th><th>Bentuk</th><th>Status</th><th>Referensi</th></tr></thead><tbody>' +
+        '<div class="table-wrap"><table class="table"><thead><tr><th>Program</th><th>Periode</th><th>Bentuk</th><th>Status</th><th>Referensi</th></tr></thead><tbody>' +
           recs.map(function (b) {
             var prg = st.data.aidPrograms.find(function (p) { return p.id === b.programId; });
             return '<tr><td><strong>' + esc(prg ? prg.name : b.programId) + '</strong></td><td>' + esc(b.periodId) + '</td><td>' + esc(b.amount) + '</td><td>' + esc(b.status) + '</td><td class="t-caption">' + esc(b.verifyRef) + '</td></tr>';
           }).join('') +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-primary" data-modal-close="1">Tutup</button>'
       );
     }
@@ -420,12 +420,12 @@
       if (!ar) return '';
       return modalWrap('Pratinjau Arsip Digital: ' + esc(ar.number),
         '<div class="alert alert-info mb-16">' + icon('lock') + '<div>Klasifikasi Akses: <strong>' + esc(ar.access) + '</strong>. Dokumen disimpan di storage privat dan hanya dapat diunduh melalui otorisasi server (BR-A05).</div></div>' +
-        '<table class="table mb-16"><tbody>' +
+        '<div class="table-wrap"><table class="table mb-16"><tbody>' +
           '<tr><td class="t-muted">Perihal</td><td><strong>' + esc(ar.subject) + '</strong></td></tr>' +
           '<tr><td class="t-muted">Kategori</td><td>' + esc(ar.category) + '</td></tr>' +
           '<tr><td class="t-muted">Tanggal / Pihak</td><td>' + esc(ar.letterDate) + ' • ' + esc(ar.party) + '</td></tr>' +
           '<tr><td class="t-muted">Catatan</td><td>' + esc(ar.note) + '</td></tr>' +
-        '</tbody></table>',
+        '</tbody></table></div>',
         '<button type="button" class="btn btn-primary" data-modal-close="1">Tutup</button>'
       );
     }
@@ -561,6 +561,8 @@
   function navigate(target) {
     var st = w.DesaApp.state;
     st.notifOpen = false;
+    st.pubMobileMenuOpen = false;
+    st.adminSidebarOpen = false;
     if (target === 'login') { st.area = 'login'; }
     else if (target === 'design-system') { st.area = 'design-system'; }
     else if (target.indexOf('public:') === 0) {
@@ -624,6 +626,21 @@
     switch (act) {
       case 'toggle-demo-bar':
         st.demoBarCollapsed = !st.demoBarCollapsed;
+        render();
+        break;
+      case 'toggle-pub-menu':
+        st.pubMobileMenuOpen = !st.pubMobileMenuOpen;
+        st.adminSidebarOpen = false;
+        render();
+        break;
+      case 'toggle-admin-sidebar':
+        st.adminSidebarOpen = !st.adminSidebarOpen;
+        st.notifOpen = false;
+        render();
+        break;
+      case 'close-mobile-menus':
+        st.pubMobileMenuOpen = false;
+        st.adminSidebarOpen = false;
         render();
         break;
       case 'copy-hex':
@@ -1231,34 +1248,45 @@
         if (st.cmdkOpen) setTimeout(function () { var el = document.getElementById('cmdk-input-el'); if (el) el.focus(); }, 20);
       }
     } else if (e.key === 'Escape') {
-      if (st.cmdkOpen || modalState || st.notifOpen) {
+      if (st.cmdkOpen || modalState || st.notifOpen || st.pubMobileMenuOpen || st.adminSidebarOpen) {
         st.cmdkOpen = false;
         modalState = null;
         st.notifOpen = false;
+        st.pubMobileMenuOpen = false;
+        st.adminSidebarOpen = false;
         render();
       }
     }
   });
 
-  // Map Drag Pan Support
+  // Map Drag Pan Support (Mouse + Touch)
   var dragging = false, dragStartX = 0, dragStartY = 0, origPanX = 0, origPanY = 0;
-  document.addEventListener('mousedown', function (e) {
-    var stage = e.target.closest('#map-drag-stage');
-    if (!stage || e.target.closest('.map-pin')) return;
+  function startMapDrag(clientX, clientY, target) {
+    var stage = target && target.closest ? target.closest('#map-drag-stage') : null;
+    if (!stage || target.closest('.map-pin')) return;
     dragging = true;
-    dragStartX = e.clientX;
-    dragStartY = e.clientY;
+    dragStartX = clientX;
+    dragStartY = clientY;
     origPanX = w.DesaApp.state.mapPanX;
     origPanY = w.DesaApp.state.mapPanY;
-  });
-  document.addEventListener('mousemove', function (e) {
+  }
+  function moveMapDrag(clientX, clientY) {
     if (!dragging) return;
-    w.DesaApp.state.mapPanX = Math.max(-180, Math.min(180, origPanX + (e.clientX - dragStartX)));
-    w.DesaApp.state.mapPanY = Math.max(-140, Math.min(140, origPanY + (e.clientY - dragStartY)));
+    w.DesaApp.state.mapPanX = Math.max(-180, Math.min(180, origPanX + (clientX - dragStartX)));
+    w.DesaApp.state.mapPanY = Math.max(-140, Math.min(140, origPanY + (clientY - dragStartY)));
     var g = document.getElementById('map-viewport-group');
     if (g) g.setAttribute('transform', 'translate(' + w.DesaApp.state.mapPanX + ',' + w.DesaApp.state.mapPanY + ') scale(' + w.DesaApp.state.mapZoom + ')');
-  });
+  }
+  document.addEventListener('mousedown', function (e) { startMapDrag(e.clientX, e.clientY, e.target); });
+  document.addEventListener('mousemove', function (e) { moveMapDrag(e.clientX, e.clientY); });
   document.addEventListener('mouseup', function () { dragging = false; });
+  document.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 1) startMapDrag(e.touches[0].clientX, e.touches[0].clientY, e.target);
+  }, { passive: true });
+  document.addEventListener('touchmove', function (e) {
+    if (dragging && e.touches.length === 1) moveMapDrag(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+  document.addEventListener('touchend', function () { dragging = false; });
 
   w.addEventListener('hashchange', parseHash);
   w.addEventListener('DOMContentLoaded', function () {

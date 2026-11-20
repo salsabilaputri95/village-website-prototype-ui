@@ -26,6 +26,8 @@
     adminTheme: 'light', // 'light' | 'dark'
     currentRole: 'petugas_pelayanan',
     demoBarCollapsed: false,
+    pubMobileMenuOpen: false,
+    adminSidebarOpen: false,
     showFullNik: false,
 
     // Sub-tabs & view filters
